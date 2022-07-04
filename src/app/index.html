@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html ng-app="appoints" ng-controller="AppCtrl">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <title ng-bind-template="{{pageTitle}} | Doctor's Appointment"></title>
+  <!-- inject:vendor:css -->
+  <link rel="stylesheet" href="/angular-bootstrap-datetimepicker/src/css/datetimepicker.css">
+  <!-- endinject -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/css/app.css">
+  <!-- endinject -->
+  <link href='//fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+  <header class="navbar navbar-default navbar-static-top" style="background-color: #10c6f1 !important;">
+    <div class="container">
+      <div class="navbar-header">
+        <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a href="#/"><img src="assets/images/DocConnect1.png"></a>
+        <!-- <a href="#/" class="navbar-brand">DOC Connect</a> -->
+      </div>
+      <nav class="collapse navbar-collapse" role="navigation">
+        <ul class="nav navbar-nav">
+          <li ng-class="{active: routeIs('/appointments')}" ng-show='user.isCustomer()'><a href="#/appointments"
+              translate>Appointments</a></li>
+        </ul>
+        <ul class="nav navbar-right" ng-show="!user.isAuthenticated">
+          <li ng-class="{ active: routeIs('/usersignin') }">
+            <a href="#/login" style=" color: #080808; font-style: normal; font-size: x-large;">Login</a>
+            <!-- <a href="#/login"><img src="assets/images/login.png"></a> -->
+          </li>
+        </ul>
+        <ul class="nav navbar-right" ng-show="!user.isAuthenticated">
+          <li ng-class="{ active: routeIs('/usersignup') }">
+            <a href="#/usersignup" style=" color: #080808; font-style: normal; font-size: x-large;">Sign up</a>
+            <!-- <a href="#/login"><img src="assets/images/login.png"></a> -->
+          </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right" ng-show="user.isAuthenticated">
+          <li class="dropdown">
+            <a href="" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span>
+              <span ng-bind="user.displayName"></span> <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="" ng-click="logout()">Logout</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <div class="container" ap-hide-flash>
+    <ng-include src="'shared/flash.html'"></ng-include>
+    <ng-view></ng-view>
+  </div>
+  <!-- inject:vendor:js -->
+  <script src="/jquery/dist/jquery.js"></script>
+  <script src="/angular/angular.js"></script>
+  <script src="/angular-route/angular-route.js"></script>
+  <script src="/rfc6570/rfc6570.js"></script>
+  <script src="/lodash/dist/lodash.compat.js"></script>
+  <script src="/moment/moment.js"></script>
+  <script src="/angular-bootstrap-datetimepicker/src/js/datetimepicker.js"></script>
+  <script src="/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="/angular-hal/angular-hal.js"></script>
+  <!-- endinject -->
+  <!-- inject:js -->
+  <script src="/appoints-client-templates.js"></script>
+  <script src="/config.js"></script>
+  <script src="/shared/directives.js"></script>
+  <script src="/shared/flash.js"></script>
+  <script src="/home/home.js"></script>
+  <script src="/shared/appointsapi.js"></script>
+  <script src="/appointments/appointments.js"></script>
+  <script src="/appointments/profile.js"></script>
+  <script src="/appointments/usersignin.js"></script>
+  <script src="/appointments/usersignup.js"></script>
+  <script src="/auth/usersession.js"></script>
+  <script src="/auth/authinterceptor.js"></script>
+  <script src="/auth/login.js"></script>
+  <script src="/app.js"></script>
+  <!-- endinject -->
+</body>
+
+</html>

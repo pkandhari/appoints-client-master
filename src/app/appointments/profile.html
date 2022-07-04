@@ -1,0 +1,101 @@
+<div class="" ng-app="appoints">
+    <h1 style="text-align: center;padding-bottom: 25px;"><b>{{vm.user.firstName}} {{vm.user.lastName}}</b></h1>
+    <form name="form" ng-submit="vm.register()" role="form">
+        <div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%;">
+            <div class="form-group col-md-6"
+                ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username" class="form-control" ng-model="vm.user.username"
+                    required />
+                <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is
+                    required</span>
+            </div>
+            <div class="form-group col-md-6"
+                ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" class="form-control" ng-model="vm.user.password"
+                    required />
+                <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is
+                    required</span>
+            </div>
+        </div>
+        <div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%;">
+            <div class="form-group col-md-12"
+                ng-class="{ 'has-error': form.email.$dirty && (form.email.$error.required || form.email.$error.email) }">
+                <label for="username">Email</label>
+                <input type="email" name="email" id="email" class="form-control" ng-model="vm.user.email" required />
+                <span ng-show="form.email.$dirty && form.email.$error.email" class="help-block">This email format is
+                    invalid!</span>
+                <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">Email is
+                    required</span>
+            </div>
+        </div>
+        <div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%;">
+            <div class="form-group col-md-6"
+                ng-class="{ 'has-error': form.firstName.$dirty && form.firstName.$error.required }">
+                <label for="username">First name</label>
+                <input type="text" name="firstName" id="firstName" class="form-control" ng-model="vm.user.firstName"
+                    required />
+                <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">First name is
+                    required</span>
+            </div>
+            <div class="form-group col-md-6"
+                ng-class="{ 'has-error': form.lastName.$dirty && form.lastName.$error.required }">
+                <label for="username">Last name</label>
+                <input type="text" name="lastName" id="lastName" class="form-control" ng-model="vm.user.lastName"
+                    required />
+                <span ng-show="form.lastName.$dirty && form.lastName.$error.required" class="help-block">Last name is
+                    required</span>
+            </div>
+        </div>
+        <div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%;">
+            <div class="form-group col-md-6">
+                <label for="username">Marital Status</label>
+                <input type="text" name="maritalStatus" id="maritalStatus" class="form-control" ng-model="vm.user.maritalStatus"/>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="username">Gender</label>
+                <input type="text" name="gender" id="gender" class="form-control" ng-model="vm.user.gender"/>
+            </div>
+        </div>
+        <div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%;">
+            <div class="form-group col-md-6">
+                <label for="username">Address</label>
+                <input type="text" name="address" id="address" class="form-control" ng-model="vm.user.address"/>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="username">Postal Code</label>
+                <input type="text" name="postalCode" id="postalCode" class="form-control" ng-model="vm.user.postalCode"/>
+            </div>
+        </div>
+        <div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%;">
+            <div class="form-group col-md-6">
+                <label for="username">city</label>
+                <input type="text" name="city" id="city" class="form-control" ng-model="vm.user.city"/>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="username">Province</label>
+                <input type="text" name="province" id="province" class="form-control" ng-model="vm.user.province"/>
+            </div>
+        </div>
+        <div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%;">
+            <div class="form-group col-md-6">
+                <label for="username">Country</label>
+                <input type="text" name="country" id="country" class="form-control" ng-model="vm.user.country"/>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="username">Contact</label>
+                <input type="number" name="contact" id="contact" class="form-control" ng-model="vm.user.contact" />
+            </div>
+        </div>
+
+        <div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%;">
+            <div class="form-actions col-md-6">
+                <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Submit</button>
+                <img ng-if="vm.dataLoading"
+                    src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                <a href="#/usersignin" class="btn btn-link">Cancel</a>
+            </div>
+        </div>
+    </form>
+</div>
