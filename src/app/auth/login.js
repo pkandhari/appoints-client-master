@@ -10,7 +10,7 @@ angular.module('appoints.login', [
         return;
       }
       usersession.login(event.data)
-        .then(function () {
+        .then(function (currentSession) {
           if ($rootScope.loginPopup) {
             $rootScope.loginPopup.close();
             delete $rootScope.loginPopup;
@@ -29,20 +29,20 @@ angular.module('appoints.login', [
 
     usersession.returnTo = $location.search().returnTo;
 
-    $scope.loginGoogle = function () {
-      return authWindow(config.defaultApiEndpoint + '/auth/google');
-    };
+    // $scope.loginGoogle = function () {
+    //   return authWindow(config.defaultApiEndpoint + '/auth/google');
+    // };
 
-    function authWindow(authUrl) {
-      $rootScope.loginPopup = popupCenterWindow(authUrl, 'authenticate', 640, 500);
-      return false;
-    }
+    // function authWindow(authUrl) {
+    //   $rootScope.loginPopup = popupCenterWindow(authUrl, 'authenticate', 640, 500);
+    //   return false;
+    // }
 
-    function popupCenterWindow(url, title, w, h) {
-      var left = (screen.width / 2) - (w / 2);
-      var top = (screen.height / 2) - (h / 2);
-      // return $window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
-      return true;
-    }
+    // function popupCenterWindow(url, title, w, h) {
+    //   var left = (screen.width / 2) - (w / 2);
+    //   var top = (screen.height / 2) - (h / 2);
+    //   return $window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+    //   return true;
+    // }
 
   });

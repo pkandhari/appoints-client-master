@@ -3,7 +3,8 @@
   "deps": [],
   "constants": {
   	"config": {
-      "defaultApiEndpoint": "http://localhost:3000"
+      "defaultApiEndpoint": "http://localhost:3000",
+      "apiEndpoint": "http://localhost/DocConnectAPI"
   	}
   }
 }

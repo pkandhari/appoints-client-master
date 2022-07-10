@@ -9,6 +9,7 @@ angular.module('appoints', [
   'appoints.login',
   'appoints.signin',
   'appoints.signup',
+  'appoints.profile',
   'appoints.appointments',
   'appoints-client-templates'
 ])
@@ -51,8 +52,8 @@ angular.module('appoints', [
       })
       .when('/profile', {
         templateUrl: 'appointments/profile.html',
-        controller: 'profileCtrl',
-        title: 'profile'
+        controller: 'ProfileCtrl',
+        title: 'Profile'
       });
   })
 
@@ -83,10 +84,12 @@ angular.module('appoints', [
 
     $scope.$on('event:loggedin', function (ev, currentSession) {
       $scope.user = currentSession;
+      usersession.current = currentSession;
     });
 
     $scope.$on('event:loggedout', function (ev, currentSession) {
       $scope.user = currentSession;
+      usersession.current = currentSession;
     });
 
   });
