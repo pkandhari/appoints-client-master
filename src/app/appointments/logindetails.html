@@ -1,0 +1,24 @@
+<div ng-app="appoints" class="col-md-6 col-md-offset-3">
+    <h1 style="text-align: center;padding-bottom: 25px;"><b>Update Login Details</b></h1>
+    <form name="form" ng-submit="vm.login()" role="form">
+        <div class="form-group" ng-class="{ 'has-error': form.oldPassword.$dirty && form.oldPassword.$error.required }">
+            <label for="oldPassword">Old Password</label>
+            <input type="password" name="oldPassword" id="oldPassword" class="form-control" ng-model="oldPassword"
+                required />
+            <span ng-show="form.oldPassword.$dirty && form.oldPassword.$error.required" class="help-block">Old password
+                is required</span>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': form.newPassword.$dirty && form.newPassword.$error.required }">
+            <label for="newPassword">New Password</label>
+            <input type="password" name="newPassword" id="newPassword" class="form-control" ng-model="newPassword"
+                required />
+            <span ng-show="form.newPassword.$dirty && form.newPassword.$error.required" class="help-block">New password
+                is required</span>
+        </div>
+        <div class="form-actions">
+            <button type="submit" ng-click="updatelogindetails()" ng-disabled="form.$invalid || vm.dataLoading"
+                class="btn btn-primary">Login</button>
+            <a href="#/" class="btn btn-link">Cancel</a>
+        </div>
+    </form>
+</div>

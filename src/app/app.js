@@ -8,6 +8,7 @@ angular.module('appoints', [
   'appoints.home',
   'appoints.login',
   'appoints.signin',
+  'appoints.logindetails',
   'appoints.signup',
   'appoints.profile',
   'appoints.appointments',
@@ -49,6 +50,11 @@ angular.module('appoints', [
         templateUrl: 'appointments/usersignup.html',
         controller: 'UserSignupCtrl',
         title: 'UserSignup'
+      })
+      .when('/logindetails', {
+        templateUrl: 'appointments/logindetails.html',
+        controller: 'LoginDetailsCtrl',
+        title: 'LoginDetails'
       })
       .when('/profile', {
         templateUrl: 'appointments/profile.html',

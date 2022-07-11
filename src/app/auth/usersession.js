@@ -37,7 +37,7 @@ angular.module('appoints.usersession', [
 
       var req = {
         method: "POST",
-        url: config.apiEndpoint + "/api/login",
+        url: config.apiEndpoint + "/login",
         data: loginObj
       };
       return $http(req)
@@ -56,6 +56,23 @@ angular.module('appoints.usersession', [
         });
     }
 
+    function updatelogindetails(loginObj) {
+      var req = {
+        method: "PUT",
+        url: config.apiEndpoint + "/login",
+        data: loginObj
+      };
+      return $http(req)
+        .then(function (result) {
+          var userResource = result.data;
+          if (userResource.UserId > 0) {
+            currentSession.isAuthenticated = true;
+          }
+        }, function (err) {
+          flash.add(err.data.ExceptionMessage, 'error');
+        });
+    }
+
     function logout() {
       $window.localStorage.removeItem('access_token');
       currentSession = new Session();
@@ -67,6 +84,7 @@ angular.module('appoints.usersession', [
     return {
       current: currentSession,
       login: login,
+      updatelogindetails: updatelogindetails,
       logout: logout,
       returnTo: returnTo
     };

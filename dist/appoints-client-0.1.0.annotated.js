@@ -7,7 +7,7 @@
   module.run([
     '$templateCache',
     function ($templateCache) {
-      $templateCache.put('auth/login.html', '<h2>Login</h2><p>Appoints doesn\'t store user credentials such as usernames and passwords. It\'s required to use one of the providers below.</p><p><a href="" ng-click="loginGoogle()">Login with Google</a></p>');
+      $templateCache.put('appointments/appointments.html', '<div ng-app="appoints" class="row"><div class="col-md-6"><h2>Create new appointment</h2><form role="form" name="form"><div class="form-group"><input class="form-control" id="title" placeholder="Enter appointment description" ng-model="newAppointment.title"></div><div class="form-group"><label for="dateAndTime">Appointment date and time</label><div class="dropdown"><a class="dropdown-toggle" id="dropdown2" role="button" data-toggle="dropdown" data-target="." href="#"><div class="input-group"><p class="form-control-static">{{ newAppointment.dateAndTime | date:\'d MMM, y H:mm\' }}</p></div></a><ul class="" role="menu" aria-labelledby="dLabel"><datetimepicker ng-model="newAppointment.dateAndTime" data-on-set-time="onTimeSet(newDate, oldDate)" datetimepicker-config="{ dropdownSelector: \'#dropdown2\', startView: \'hour\', minuteStep: 15 }"></ul></div></div><div class="form-group"><label for="duration">Duration</label><select class="form-control" id="duration" ng-model="newAppointment.duration"><option value="15">15 minutes</option><option value="30">30 minutes</option><option value="60">60 minutes</option><option value="90">90 minutes</option></select></div><div class="form-group"><label for="remarks">Remarks</label><textarea id="remarks" class="form-control" rows="3" ng-model="newAppointment.remarks"> </textarea></div><button type="submit" class="btn btn-default" ng-click="createAppointment()" ng-disabled="form.$invalid">Create</button></form></div><div class="col-md-6"><h2>Upcoming appointments</h2><p ng-if="upcomingAppointments.length === 0">-- None --</p><ul class="list-group"><li class="list-group-item" ng-repeat="appointment in upcomingAppointments"><div><div class="dropdown"><a href="" class="pull-right" ng-click="removeAppointment(appointment)" title="Remove"><span class="glyphicon glyphicon-remove"></span></a> <a class="dropdown-toggle" role="button" data-toggle="dropdown" data-target="#" title="Reschedule appointment" id="appointment{{$index}}" href="" ng-click="setAppointmentForEdit(appointment)"><span class="glyphicon glyphicon-time"></span></a><ul class="dropdown-menu" role="menu"><datetimepicker data-ng-model="editAppointment.dateAndTime" data-datetimepicker-config="{ dropdownSelector: \'#appointment{{$index}}\', startView: \'hour\', minuteStep: 15 }" on-set-time="reschedule(newDate, oldDate)"></ul></div></div><h4 class="list-group-item-heading">{{appointment.title}} <small>{{appointment.dateAndTime | date:\'d MMM, y H:mm\'}}-{{appointment.endDateAndTime | date:\'H:mm\'}}, duration {{appointment.duration}} mins</small></h4><p class="list-group-item-text">{{appointment.remarks}}</p></li></ul><h2>Past appointments</h2><p ng-if="pastAppointments.length === 0">-- None --</p><ul class="list-group"><li class="list-group-item" ng-repeat="appointment in pastAppointments"><div><a href="" class="pull-right" ng-click="removeAppointment(appointment)" title="Remove"><span class="glyphicon glyphicon-remove"></span></a></div><h4 class="list-group-item-heading">{{appointment.title}} <small>{{appointment.dateAndTime | date:\'d MMM, y H:mm\'}}-{{appointment.endDateAndTime | date:\'H:mm\'}}, duration {{appointment.duration}} mins</small></h4><p class="list-group-item-text">{{appointment.remarks}}</p></li></ul></div></div>');
     }
   ]);
 }());
@@ -20,7 +20,7 @@
   module.run([
     '$templateCache',
     function ($templateCache) {
-      $templateCache.put('appointments/appointments.html', '<div ng-app="appoints" class="row"><div class="col-md-6"><h2>Create new appointment</h2><form role="form" name="form"><div class="form-group"><input class="form-control" id="title" placeholder="Enter appointment description" ng-model="newAppointment.title"></div><div class="form-group"><label for="dateAndTime">Appointment date and time</label><div class="dropdown"><a class="dropdown-toggle" id="dropdown2" role="button" data-toggle="dropdown" data-target="." href="#"><div class="input-group"><p class="form-control-static">{{ newAppointment.dateAndTime | date:\'d MMM, y H:mm\' }}</p></div></a><ul class="" role="menu" aria-labelledby="dLabel"><datetimepicker ng-model="newAppointment.dateAndTime" data-on-set-time="onTimeSet(newDate, oldDate)" datetimepicker-config="{ dropdownSelector: \'#dropdown2\', startView: \'hour\', minuteStep: 15 }"></ul></div></div><div class="form-group"><label for="duration">Duration</label><select class="form-control" id="duration" ng-model="newAppointment.duration"><option value="15">15 minutes</option><option value="30">30 minutes</option><option value="60">60 minutes</option><option value="90">90 minutes</option></select></div><div class="form-group"><label for="remarks">Remarks</label><textarea id="remarks" class="form-control" rows="3" ng-model="newAppointment.remarks"> </textarea></div><button type="submit" class="btn btn-default" ng-click="createAppointment()" ng-disabled="form.$invalid">Create</button></form></div><div class="col-md-6"><h2>Upcoming appointments</h2><p ng-if="upcomingAppointments.length === 0">-- None --</p><ul class="list-group"><li class="list-group-item" ng-repeat="appointment in upcomingAppointments"><div><div class="dropdown"><a href="" class="pull-right" ng-click="removeAppointment(appointment)" title="Remove"><span class="glyphicon glyphicon-remove"></span></a> <a class="dropdown-toggle" role="button" data-toggle="dropdown" data-target="#" title="Reschedule appointment" id="appointment{{$index}}" href="" ng-click="setAppointmentForEdit(appointment)"><span class="glyphicon glyphicon-time"></span></a><ul class="dropdown-menu" role="menu"><datetimepicker data-ng-model="editAppointment.dateAndTime" data-datetimepicker-config="{ dropdownSelector: \'#appointment{{$index}}\', startView: \'hour\', minuteStep: 15 }" on-set-time="reschedule(newDate, oldDate)"></ul></div></div><h4 class="list-group-item-heading">{{appointment.title}} <small>{{appointment.dateAndTime | date:\'d MMM, y H:mm\'}}-{{appointment.endDateAndTime | date:\'H:mm\'}}, duration {{appointment.duration}} mins</small></h4><p class="list-group-item-text">{{appointment.remarks}}</p></li></ul><h2>Past appointments</h2><p ng-if="pastAppointments.length === 0">-- None --</p><ul class="list-group"><li class="list-group-item" ng-repeat="appointment in pastAppointments"><div><a href="" class="pull-right" ng-click="removeAppointment(appointment)" title="Remove"><span class="glyphicon glyphicon-remove"></span></a></div><h4 class="list-group-item-heading">{{appointment.title}} <small>{{appointment.dateAndTime | date:\'d MMM, y H:mm\'}}-{{appointment.endDateAndTime | date:\'H:mm\'}}, duration {{appointment.duration}} mins</small></h4><p class="list-group-item-text">{{appointment.remarks}}</p></li></ul></div></div>');
+      $templateCache.put('appointments/logindetails.html', '<div ng-app="appoints" class="col-md-6 col-md-offset-3"><h1 style="text-align: center;padding-bottom: 25px"><b>Update Login Details</b></h1><form name="form" ng-submit="vm.login()" role="form"><div class="form-group" ng-class="{ \'has-error\': form.oldPassword.$dirty && form.oldPassword.$error.required }"><label for="oldPassword">Old Password</label><input type="password" name="oldPassword" id="oldPassword" class="form-control" ng-model="oldPassword" required> <span ng-show="form.oldPassword.$dirty && form.oldPassword.$error.required" class="help-block">Old password is required</span></div><div class="form-group" ng-class="{ \'has-error\': form.newPassword.$dirty && form.newPassword.$error.required }"><label for="newPassword">New Password</label><input type="password" name="newPassword" id="newPassword" class="form-control" ng-model="newPassword" required> <span ng-show="form.newPassword.$dirty && form.newPassword.$error.required" class="help-block">New password is required</span></div><div class="form-actions"><button type="submit" ng-click="updatelogindetails()" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Login</button> <a href="#/" class="btn btn-link">Cancel</a></div></form></div>');
     }
   ]);
 }());
@@ -46,7 +46,7 @@
   module.run([
     '$templateCache',
     function ($templateCache) {
-      $templateCache.put('appointments/usersignin.html', '<div ng-app="appoints" class="col-md-6 col-md-offset-3"><h2>Login</h2><form name="form" ng-submit="vm.login()" role="form"><div class="form-group" ng-class="{ \'has-error\': form.username.$dirty && form.username.$error.required }"><label for="username">Username</label><input name="username" id="username" class="form-control" ng-model="username" required> <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span></div><div class="form-group" ng-class="{ \'has-error\': form.password.$dirty && form.password.$error.required }"><label for="password">Password</label><input type="password" name="password" id="password" class="form-control" ng-model="password" required> <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span></div><div class="form-actions"><button type="submit" ng-click="login()" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Login</button> <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="> <a href="#/usersignup" class="btn btn-link">Signup</a></div></form></div>');
+      $templateCache.put('appointments/usersignin.html', '<div ng-app="appoints" class="col-md-6 col-md-offset-3"><h1 style="text-align: center;padding-bottom: 25px"><b>Login</b></h1><form name="form" ng-submit="vm.login()" role="form"><div class="form-group" ng-class="{ \'has-error\': form.username.$dirty && form.username.$error.required }"><label for="username">Username</label><input name="username" id="username" class="form-control" ng-model="username" required> <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span></div><div class="form-group" ng-class="{ \'has-error\': form.password.$dirty && form.password.$error.required }"><label for="password">Password</label><input type="password" name="password" id="password" class="form-control" ng-model="password" required> <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span></div><div class="form-actions"><button type="submit" ng-click="login()" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Login</button> <a href="#/usersignup" class="btn btn-link">Signup</a></div></form></div>');
     }
   ]);
 }());
@@ -60,6 +60,19 @@
     '$templateCache',
     function ($templateCache) {
       $templateCache.put('appointments/usersignup.html', '<div class="" ng-app="appoints"><h1 style="text-align: center;padding-bottom: 25px">Sign up your practice to <b>DOC Connect</b></h1><form name="form" ng-submit="vm.register()" role="form"><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%"><div class="form-group col-md-12" ng-class="{ \'has-error\': form.email.$dirty && (form.email.$error.required || form.email.$error.email) }"><label for="username">Email</label><input type="email" name="email" id="email" class="form-control" ng-model="vm.user.email" required> <span ng-show="form.email.$dirty && form.email.$error.email" class="help-block">This email format is invalid!</span> <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">Email is required</span></div></div><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%"><div class="form-group col-md-6" ng-class="{ \'has-error\': form.firstName.$dirty && form.firstName.$error.required }"><label for="username">First name</label><input name="firstName" id="firstName" class="form-control" ng-model="vm.user.firstName" required> <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">First name is required</span></div><div class="form-group col-md-6" ng-class="{ \'has-error\': form.lastName.$dirty && form.lastName.$error.required }"><label for="username">Last name</label><input name="lastName" id="lastName" class="form-control" ng-model="vm.user.lastName" required> <span ng-show="form.lastName.$dirty && form.lastName.$error.required" class="help-block">Last name is required</span></div></div><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%"><div class="form-group col-md-6" ng-class="{ \'has-error\': form.username.$dirty && form.username.$error.required }"><label for="username">Username</label><input name="username" id="username" class="form-control" ng-model="vm.user.username" required> <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span></div><div class="form-group col-md-6" ng-class="{ \'has-error\': form.password.$dirty && form.password.$error.required }"><label for="password">Password</label><input type="password" name="password" id="password" class="form-control" ng-model="vm.user.password" required> <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span></div></div><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%"><div class="form-actions col-md-6"><button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Sign up</button> <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="> <a href="#/usersignin" class="btn btn-link">Cancel</a></div></div></form></div>');
+    }
+  ]);
+}());
+(function (module) {
+  try {
+    module = angular.module('appoints-client-templates');
+  } catch (e) {
+    module = angular.module('appoints-client-templates', []);
+  }
+  module.run([
+    '$templateCache',
+    function ($templateCache) {
+      $templateCache.put('auth/login.html', '<h2>Login</h2><p>Appoints doesn\'t store user credentials such as usernames and passwords. It\'s required to use one of the providers below.</p><p><a href="" ng-click="loginGoogle()">Login with Google</a></p>');
     }
   ]);
 }());
@@ -334,7 +347,7 @@ angular.module('appoints.usersession', [
       // });
       var req = {
           method: 'POST',
-          url: config.apiEndpoint + '/api/login',
+          url: config.apiEndpoint + '/login',
           data: loginObj
         };
       return $http(req).then(function (result) {
@@ -351,6 +364,21 @@ angular.module('appoints.usersession', [
         flash.add(err.data.ExceptionMessage, 'error');
       });
     }
+    function updatelogindetails(loginObj) {
+      var req = {
+          method: 'PUT',
+          url: config.apiEndpoint + '/login',
+          data: loginObj
+        };
+      return $http(req).then(function (result) {
+        var userResource = result.data;
+        if (userResource.UserId > 0) {
+          currentSession.isAuthenticated = true;
+        }
+      }, function (err) {
+        flash.add(err.data.ExceptionMessage, 'error');
+      });
+    }
     function logout() {
       $window.localStorage.removeItem('access_token');
       currentSession = new Session();
@@ -360,6 +388,7 @@ angular.module('appoints.usersession', [
     return {
       current: currentSession,
       login: login,
+      updatelogindetails: updatelogindetails,
       logout: logout,
       returnTo: returnTo
     };
@@ -371,6 +400,41 @@ angular.module('appoints.usersession', [
   'appointsapi',
   'usersession',
   function ($window, $rootScope, $log, appointsapi, usersession) {
+  }
+]);
+angular.module('appoints.logindetails', [
+  'appoints.api',
+  'appoints.config',
+  'appoints.usersession',
+  'appoints.flash',
+  'ngRoute'
+]).controller('LoginDetailsCtrl', [
+  '$scope',
+  'flash',
+  '$http',
+  '$window',
+  '$rootScope',
+  '$location',
+  'config',
+  'usersession',
+  function LoginDetailsController($scope, flash, $http, $window, $rootScope, $location, config, usersession) {
+    $scope.updatelogindetails = function () {
+      var loginObj = {};
+      loginObj.userId = usersession.current.userId;
+      loginObj.oldPassword = $scope.oldPassword;
+      loginObj.newPassword = $scope.newPassword;
+      usersession.updatelogindetails(loginObj).then(function () {
+        if (usersession.current.isAuthenticated) {
+          if (usersession.returnTo) {
+            $location.url(usersession.returnTo);
+          } else {
+            $location.url('/');
+          }
+        } else {
+          flash.add('Invalid username or password.', 'error');
+        }
+      });
+    };
   }
 ]);
 angular.module('appoints.profile', [
@@ -550,6 +614,7 @@ angular.module('appoints', [
   'appoints.home',
   'appoints.login',
   'appoints.signin',
+  'appoints.logindetails',
   'appoints.signup',
   'appoints.profile',
   'appoints.appointments',
@@ -583,6 +648,10 @@ angular.module('appoints', [
       templateUrl: 'appointments/usersignup.html',
       controller: 'UserSignupCtrl',
       title: 'UserSignup'
+    }).when('/logindetails', {
+      templateUrl: 'appointments/logindetails.html',
+      controller: 'LoginDetailsCtrl',
+      title: 'LoginDetails'
     }).when('/profile', {
       templateUrl: 'appointments/profile.html',
       controller: 'ProfileCtrl',
