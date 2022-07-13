@@ -32,8 +32,10 @@
       </div>
       <nav class="collapse navbar-collapse" role="navigation">
         <ul class="nav navbar-nav">
-          <li ng-class="{active: routeIs('/appointments')}" ng-show='!user.isDoctor'><a href="#/appointments"
+          <li ng-class="{active: routeIs('/appointments')}" ng-show='user.isAuthenticated'><a href="#/appointments"
               translate>Appointments</a></li>
+          <li ng-class="{active: routeIs('/landing')}" ng-show='user.isAuthenticated'><a href="#/landing"
+              translate>Landing Page</a></li>
         </ul>
         <ul class="nav navbar-right" ng-show="!user.isAuthenticated">
           <li ng-class="{ active: routeIs('/usersignin') }">
@@ -48,10 +50,11 @@
         </ul>
         <ul class="nav navbar-nav navbar-right" ng-show="user.isAuthenticated">
           <li class="dropdown">
-            <a href="" class="dropdown-toggle" style="color: #080808; font-style: normal; font-size: large;" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span>
+            <a href="" class="dropdown-toggle" style="color: #080808; font-style: normal; font-size: large;"
+              data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span>
               <span ng-bind="user.displayName"></span> <b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li><a href="#/profile">Update/View Profile</a></li>
+              <li><a href="#/profile/false/false/0">Update/View Profile</a></li>
               <li><a href="#/logindetails">Update Login Details</a></li>
               <li><a href="" ng-click="logout()">Logout</a></li>
             </ul>
@@ -85,6 +88,8 @@
   <script src="/appointments/appointments.js"></script>
   <script src="/appointments/usersignup.js"></script>
   <script src="/auth/usersession.js"></script>
+  <script src="/appointments/landingpage.js"></script>
+  <script src="/appointments/logindetails.js"></script>
   <script src="/appointments/profile.js"></script>
   <script src="/appointments/usersignin.js"></script>
   <script src="/auth/authinterceptor.js"></script>

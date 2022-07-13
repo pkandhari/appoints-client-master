@@ -19,26 +19,12 @@ angular.module('appoints.signin', [
               $location.url(usersession.returnTo);
             }
             else {
-              $location.url('/');
+              $location.url('/landing');
             }
           }
           else {
             flash.add('Invalid username or password.', 'error')
           }
         });
-
-
-
-
-
-
-      // var req = {
-      //   method: "GET",
-      //   url: "http://localhost/DocConnectAPI/api/values"
-      // };
-      // $http(req)
-      //   .then(function mySuccess(response) {
-      //     $scope.myWelcome = response.data;
-      //   });
     };
   });

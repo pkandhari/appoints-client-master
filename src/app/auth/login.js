@@ -10,7 +10,7 @@ angular.module('appoints.login', [
         return;
       }
       usersession.login(event.data)
-        .then(function (currentSession) {
+        .then(function (current) {
           if ($rootScope.loginPopup) {
             $rootScope.loginPopup.close();
             delete $rootScope.loginPopup;

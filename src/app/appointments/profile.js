@@ -3,19 +3,33 @@ angular.module('appoints.profile', [
     'appoints.usersession'
 ])
 
-    .controller('ProfileCtrl', function ProfileController($scope, config, usersession, $http, flash) {
+    .controller('ProfileCtrl', function ProfileController($scope, config, usersession, $http, $location, flash, $routeParams) {
         // var profileVM = this;
+        $scope.isreadonly = $routeParams.isreadonly == 'true';
         $scope.dataLoading = true;
 
         $scope.getProfileData = function () {
             var reqURL = config.apiEndpoint;
 
-            if (usersession.current.isAdmin)
-                reqURL = reqURL + "/admins/" + usersession.current.userId;
-            else if (usersession.current.isDoctor)
-                reqURL = reqURL + "/doctors/" + usersession.current.userId;
-            else
-                reqURL = reqURL + "/patients/" + usersession.current.userId;
+            if ($scope.isreadonly) {
+                if ($routeParams.isdoctor == 'true') {
+                    reqURL = reqURL + "/doctors/" + $routeParams.userid;
+                }
+                else {
+                    reqURL = reqURL + "/patients/" + $routeParams.userid;
+                }
+            }
+            else {
+                if (usersession.current.isAdmin) {
+                    reqURL = reqURL + "/admins/" + usersession.current.userId;
+                }
+                else if (usersession.current.isDoctor) {
+                    reqURL = reqURL + "/doctors/" + usersession.current.userId;
+                }
+                else {
+                    reqURL = reqURL + "/patients/" + usersession.current.userId;
+                }
+            }
 
             var req = {
                 method: "GET",
@@ -28,6 +42,10 @@ angular.module('appoints.profile', [
                 }, function (err) {
                     flash.add(err.data.ExceptionMessage, 'error');
                 });
+        };
+
+        $scope.goToLandingPage = function (doctor) {
+            $location.url('/landing');
         };
 
         $scope.getProfileData();

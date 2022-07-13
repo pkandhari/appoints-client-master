@@ -10,6 +10,7 @@ angular.module('appoints', [
   'appoints.signin',
   'appoints.logindetails',
   'appoints.signup',
+  'appoints.landing',
   'appoints.profile',
   'appoints.appointments',
   'appoints-client-templates'
@@ -56,7 +57,12 @@ angular.module('appoints', [
         controller: 'LoginDetailsCtrl',
         title: 'LoginDetails'
       })
-      .when('/profile', {
+      .when('/landing', {
+        templateUrl: 'appointments/landingpage.html',
+        controller: 'LandingPageCtrl',
+        title: 'LandingPage'
+      })
+      .when('/profile/:isreadonly/:isdoctor/:userid', {
         templateUrl: 'appointments/profile.html',
         controller: 'ProfileCtrl',
         title: 'Profile'

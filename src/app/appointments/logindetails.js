@@ -14,8 +14,8 @@ angular.module('appoints.logindetails', [
             loginObj.oldPassword = $scope.oldPassword;
             loginObj.newPassword = $scope.newPassword;
             usersession.updatelogindetails(loginObj)
-                .then(function () {
-                    if (usersession.current.isAuthenticated) {
+                .then(function (result) {
+                    if (result) {
                         if (usersession.returnTo) {
                             $location.url(usersession.returnTo);
                         }
@@ -23,9 +23,8 @@ angular.module('appoints.logindetails', [
                             $location.url('/');
                         }
                     }
-                    else {
-                        flash.add('Invalid username or password.', 'error')
-                    }
+                }, function (err) {
+                    flash.add(err.data.ExceptionMessage, 'error');
                 });
         };
     });
