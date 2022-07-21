@@ -39,8 +39,8 @@ angular.module('appoints.landing', [
             $location.url('/profile/true/true/' + doctor.UserDetails.UserId);
         };
 
-        $scope.openPatientDetails = function (doctor) {
-            $location.url('/profile/true/false/' + doctor.UserDetails.UserId);
+        $scope.openPatientDetails = function (patient) {
+            $location.url('/profile/true/false/' + patient.UserDetails.UserId);
         };
 
         $scope.getDoctors();

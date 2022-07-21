@@ -5,7 +5,8 @@
             <div class="form-group col-md-12"
                 ng-class="{ 'has-error': form.email.$dirty && (form.email.$error.required || form.email.$error.email) }">
                 <label for="username">Email</label>
-                <input type="email" name="email" id="email" class="form-control" ng-model="vm.user.email" required />
+                <span class="mandatoryField" style="color: red;">*</span>
+                <input type="email" name="email" id="email" class="form-control" ng-model="signupObj.email" required />
                 <span ng-show="form.email.$dirty && form.email.$error.email" class="help-block">This email format is
                     invalid!</span>
                 <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">Email is
@@ -16,16 +17,16 @@
             <div class="form-group col-md-6"
                 ng-class="{ 'has-error': form.firstName.$dirty && form.firstName.$error.required }">
                 <label for="username">First name</label>
-                <input type="text" name="firstName" id="firstName" class="form-control" ng-model="vm.user.firstName"
-                    required />
+                <span class="mandatoryField" style="color: red;">*</span>
+                <input type="text" name="firstName" id="firstName" class="form-control" ng-model="signupObj.firstName" required />
                 <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">First name is
                     required</span>
             </div>
             <div class="form-group col-md-6"
                 ng-class="{ 'has-error': form.lastName.$dirty && form.lastName.$error.required }">
                 <label for="username">Last name</label>
-                <input type="text" name="lastName" id="lastName" class="form-control" ng-model="vm.user.lastName"
-                    required />
+                <span class="mandatoryField" style="color: red;">*</span>
+                <input type="text" name="lastName" id="lastName" class="form-control" ng-model="signupObj.lastName" required />
                 <span ng-show="form.lastName.$dirty && form.lastName.$error.required" class="help-block">Last name is
                     required</span>
             </div>
@@ -34,27 +35,45 @@
             <div class="form-group col-md-6"
                 ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
                 <label for="username">Username</label>
-                <input type="text" name="username" id="username" class="form-control" ng-model="vm.user.username"
-                    required />
+                <span class="mandatoryField" style="color: red;">*</span>
+                <input type="text" name="username" id="username" class="form-control" ng-model="signupObj.username" required />
                 <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is
                     required</span>
             </div>
             <div class="form-group col-md-6"
                 ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
                 <label for="password">Password</label>
-                <input type="password" name="password" id="password" class="form-control" ng-model="vm.user.password"
+                <span class="mandatoryField" style="color: red;">*</span>
+                <input type="password" name="password" id="password" class="form-control" ng-model="signupObj.password"
                     required />
                 <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is
                     required</span>
             </div>
         </div>
+        <div class="form-check col-md-12" style="padding-left: 15%;padding-right: 15%;">
+            <div class="form-group col-md-6">
+                <label for="isPractitioner">I am a practitioner</label>
+                <input type="checkbox" name="isPractitioner" id="isPractitioner" ng-model="signupObj.isPractitioner" />
+            </div>
+        </div>
+
+        <div class="form-group col-md-12" ng-show="signupObj.isPractitioner" style="padding-left: 15%;padding-right: 15%;">
+            <div class="form-group col-md-6">
+                <label for="specialty">Your specialty</label>
+                <input type="text" name="specialty" id="specialty" class="form-control" ng-model="signupObj.specialty" />
+                <small class="form-text text-muted"><i>"Dentistry", "Chiropractics"</i>, etc.</small>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="credentials">Credentials</label>
+                <input type="text" name="credentials" id="credentials" class="form-control" ng-model="signupObj.credentials" />
+                <small class="form-text text-muted"><i>MD, BDS, DPM</i>, etc.</small>
+            </div>
+        </div>
 
         <div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%;">
             <div class="form-actions col-md-6">
-                <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Sign
+                <button type="submit" ng-click="signup()" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Sign
                     up</button>
-                <img ng-if="vm.dataLoading"
-                    src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
                 <a href="#/usersignin" class="btn btn-link">Cancel</a>
             </div>
         </div>

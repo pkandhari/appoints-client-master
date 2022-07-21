@@ -46,6 +46,20 @@ angular.module('appoints.usersession', [
         });
     }
 
+    function signup(signupObj) {
+      var req = {
+        method: "POST",
+        url: config.apiEndpoint + "/signup",
+        data: signupObj
+      };
+      return $http(req)
+        .then(function (result) {
+          return result;
+        }, function (err) {
+          flash.add(err.data.ExceptionMessage, 'error');
+        });
+    }
+
     function updatelogindetails(loginObj) {
       var req = {
         method: "PUT",
@@ -71,6 +85,7 @@ angular.module('appoints.usersession', [
     return {
       current: currentSession,
       login: login,
+      signup: signup,
       updatelogindetails: updatelogindetails,
       logout: logout,
       returnTo: returnTo
@@ -91,11 +106,13 @@ angular.module('appoints.usersession', [
       };
       return $http(req)
         .then(function (result) {
-          userResource = result.data;
+          var userResource = result.data;
           if (userResource.UserId > 0) {
             usersession.current.isAuthenticated = true;
             usersession.current.userId = userResource.UserId;
             usersession.current.displayName = userResource.DisplayName;
+            usersession.current.isAdmin = userResource.IsAdmin;
+            usersession.current.isDoctor = userResource.IsDoctor;
             $rootScope.$broadcast('event:loggedin', usersession.current);
           }
         }, function (err) {

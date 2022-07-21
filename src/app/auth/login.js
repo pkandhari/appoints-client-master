@@ -4,27 +4,6 @@ angular.module('appoints.login', [
   'ngRoute'
 ])
 
-  .run(function ($window, $rootScope, $location, config, usersession) {
-    $window.addEventListener('message', function (event) {
-      if (event.origin !== config.defaultApiEndpoint) {
-        return;
-      }
-      usersession.login(event.data)
-        .then(function (current) {
-          if ($rootScope.loginPopup) {
-            $rootScope.loginPopup.close();
-            delete $rootScope.loginPopup;
-          }
-          if (usersession.returnTo) {
-            $location.url(usersession.returnTo);
-          }
-          else {
-            $location.url('/');
-          }
-        });
-    }, false);
-  })
-
   .controller('LoginCtrl', function LoginController($scope, $rootScope, $window, $location, config, usersession) {
 
     usersession.returnTo = $location.search().returnTo;

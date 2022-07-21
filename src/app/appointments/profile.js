@@ -3,16 +3,16 @@ angular.module('appoints.profile', [
     'appoints.usersession'
 ])
 
-    .controller('ProfileCtrl', function ProfileController($scope, config, usersession, $http, $location, flash, $routeParams) {
+    .controller('ProfileCtrl', function ProfileController($scope, $rootScope, $timeout, config, usersession, $http, $location, flash, $routeParams) {
         // var profileVM = this;
-        $scope.isreadonly = $routeParams.isreadonly == 'true';
+        $scope.isreadonly = $routeParams.isreadonly === 'true';
         $scope.dataLoading = true;
 
         $scope.getProfileData = function () {
             var reqURL = config.apiEndpoint;
 
             if ($scope.isreadonly) {
-                if ($routeParams.isdoctor == 'true') {
+                if ($routeParams.isdoctor === 'true') {
                     reqURL = reqURL + "/doctors/" + $routeParams.userid;
                 }
                 else {
@@ -44,10 +44,13 @@ angular.module('appoints.profile', [
                 });
         };
 
-        $scope.goToLandingPage = function (doctor) {
+        $scope.goToLandingPage = function () {
             $location.url('/landing');
         };
 
         $scope.getProfileData();
+        // $timeout(function () {
+        //     $scope.getProfileData(); // this is the called function
+        //   }, 3000);
     });
 
