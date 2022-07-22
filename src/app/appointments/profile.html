@@ -1,8 +1,7 @@
 <div class="" ng-app="appoints" ng-controller="ProfileCtrl">
     <div style="font-size: larger;padding-left: 5%;" ng-if="isreadonly">
-        <a class="dropdown-toggle" role="button" title="Go to landing page" id="patient{{$index}}" href=""
-            ng-click="goToLandingPage()"><span class="glyphicon glyphicon-circle-arrow-left"></span>Go to landing
-            page</a>
+        <a class="dropdown-toggle" role="button" title="Go to Dashboard" id="patient{{$index}}" href=""
+            ng-click="goToLandingPage()"><span class="glyphicon glyphicon-circle-arrow-left"></span>Go to dashboard</a>
     </div>
     <h2 ng-if="!dataLoading" style="text-align: center;">Details of:
         <b>{{profileData.UserDetails.FirstName}} {{profileData.UserDetails.LastName}}</b>
@@ -87,8 +86,10 @@
             </div>
         </div>
 
-        <h2 style="text-align: center;" ng-if="!profileData.UserDetails.IsAdmin && profileData.UserDetails.IsDoctor"><b>Doctor's Details</b></h2>
-        <div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%;" ng-if="!profileData.UserDetails.IsAdmin && profileData.UserDetails.IsDoctor">
+        <h2 style="text-align: center;" ng-if="!profileData.UserDetails.IsAdmin && profileData.UserDetails.IsDoctor">
+            <b>Doctor's Details</b></h2>
+        <div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%;"
+            ng-if="!profileData.UserDetails.IsAdmin && profileData.UserDetails.IsDoctor">
             <div class="form-group col-md-6">
                 <label for="availability">Availability</label>
                 <input type="text" name="availability" id="availability" class="form-control"
@@ -100,7 +101,8 @@
                     ng-readonly="{{isreadonly}}" ng-model="profileData.CurrentWorkingStatus" />
             </div>
         </div>
-        <div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%;" ng-if="!profileData.UserDetails.IsAdmin && profileData.UserDetails.IsDoctor">
+        <div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%;"
+            ng-if="!profileData.UserDetails.IsAdmin && profileData.UserDetails.IsDoctor">
             <div class="form-group col-md-6">
                 <label for="department">Department</label>
                 <input type="text" name="department" id="department" class="form-control" ng-readonly="{{isreadonly}}"
@@ -112,7 +114,8 @@
                     ng-readonly="{{isreadonly}}" ng-model="profileData.FieldOfPractice" />
             </div>
         </div>
-        <div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%;" ng-if="!profileData.UserDetails.IsAdmin && profileData.UserDetails.IsDoctor">
+        <div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%;"
+            ng-if="!profileData.UserDetails.IsAdmin && profileData.UserDetails.IsDoctor">
             <div class="form-group col-md-6">
                 <label for="degree">Degree</label>
                 <input type="text" name="degree" id="degree" class="form-control" ng-readonly="{{isreadonly}}"
@@ -124,7 +127,8 @@
                     ng-readonly="{{isreadonly}}" ng-model="profileData.GraduatedFrom" />
             </div>
         </div>
-        <div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%;" ng-if="!profileData.UserDetails.IsAdmin && profileData.UserDetails.IsDoctor">
+        <div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%;"
+            ng-if="!profileData.UserDetails.IsAdmin && profileData.UserDetails.IsDoctor">
             <div class="form-group col-md-6">
                 <label for="dateOfJoining">Date of Joining</label>
                 <input type="text" name="dateOfJoining" id="dateOfJoining" class="form-control"
@@ -137,8 +141,10 @@
             </div>
         </div>
 
-        <h2 style="text-align: center;" ng-if="!profileData.UserDetails.IsAdmin && !profileData.UserDetails.IsDoctor"><b>Patient's Details</b></h2>
-        <div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%;" ng-if="(!profileData.UserDetails.IsAdmin && !profileData.UserDetails.IsDoctor)">
+        <h2 style="text-align: center;" ng-if="!profileData.UserDetails.IsAdmin && !profileData.UserDetails.IsDoctor">
+            <b>Patient's Details</b></h2>
+        <div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%;"
+            ng-if="(!profileData.UserDetails.IsAdmin && !profileData.UserDetails.IsDoctor)">
             <div class="form-group col-md-6">
                 <label for="allergies">Allergies</label>
                 <input type="text" name="allergies" id="allergies" class="form-control" ng-readonly="{{isreadonly}}"

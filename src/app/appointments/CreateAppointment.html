@@ -1,0 +1,69 @@
+<div id="example" ng-app="appoints">
+    <div class="col-md-4">
+        <h2 style="text-align: center;"><b>Create new appointment</b></h2>
+
+        <form role="form" name="form">
+            <div class="form-group">
+                <label for="doctor">Doctor</label>
+                <select class="form-control" id="doctor" ng-model="newAppointment.doctor">
+                    <option value="" disabled selected>Select your option</option>
+                    <option value="1">James Thomas</option>
+                    <option value="2">Jack Connor</option>
+                    <option value="3">William</option>
+                    <option value="4">Michael Johanson</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" id="title" placeholder="Enter appointment description"
+                    ng-model="newAppointment.title" required>
+            </div>
+            <div class="form-group">
+                <label for="dateAndTime">Appointment date and time</label>
+                <div class="dropdown">
+                    <a class="dropdown-toggle" id="dropdown1" role="button" data-toggle="dropdown">
+                        <div class="input-group">
+                            <input type="text" required data-date-time-input="MM/DD/YYYY HH:mm:ss" class="form-control"
+                                data-ng-model="newAppointment.dateAndTime">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <datetimepicker data-ng-model="newAppointment.dateAndTime"
+                            data-datetimepicker-config="{ dropdownSelector: '#dropdown1', startView: 'hour', minuteStep: 15 }">
+                        </datetimepicker>
+                    </ul>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="duration">Duration</label>
+                <select class="form-control" id="duration" ng-model="newAppointment.duration">
+                    <option value="15">15 minutes</option>
+                    <option value="30">30 minutes</option>
+                    <option value="60">60 minutes</option>
+                    <option value="90">90 minutes</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="remarks">Remarks</label>
+                <textarea id="remarks" class="form-control" rows="4" placeholder="Enter additional remarks"
+                    ng-model="newAppointment.remarks"> </textarea>
+            </div>
+            <button type="submit" class="btn btn-default" ng-click="createAppointment()"
+                ng-disabled="form.$invalid">Create</button>
+        </form>
+
+    </div>
+    <div class="col-md-8">
+        <h2 style="text-align: center;"><b>Doctor's Appointment Calendar</b></h2>
+        <div class="btn-toolbar">
+            <div class="btn-group">
+                <button class="btn btn-success" ng-click="changeView('agendaDay', 'myCalendar')">AgendaDay</button>
+                <button class="btn btn-success" ng-click="changeView('agendaWeek', 'myCalendar')">AgendaWeek</button>
+                <button class="btn btn-success" ng-click="changeView('month', 'myCalendar')">Month</button>
+            </div>
+        </div>
+        <div class="calendar" ng-model="eventSources" calendar="myCalendar" ui-calendar="uiConfig.calendar"></div>
+    </div>
+
+</div>

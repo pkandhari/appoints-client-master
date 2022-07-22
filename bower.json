@@ -5,9 +5,9 @@
     "/dist/appoints-client.min.css"
   ],
   "version": "0.1.0",
-  "description": "An example appointment scheduler app",
+  "description": "Doctor appointment scheduler app",
   "authors": [
-    "Martijn Boland"
+    "Pritpal Singh Kandhari"
   ],
   "ignore": [
     "**/.*",
@@ -25,7 +25,8 @@
     "angular-hal": "~0.1.5",
     "lodash": "~2.4.1",
     "moment": "~2.8.3",
-    "angular-bootstrap-datetimepicker": "~0.3"
+    "angular-bootstrap-datetimepicker": "~0.3",
+    "angular-ui-calendar": "^1.0.2"
   },
   "overrides": {
     "bootstrap": {

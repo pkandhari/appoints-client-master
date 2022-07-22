@@ -19,11 +19,11 @@ angular.module('appoints.signin', [
               $location.url(usersession.returnTo);
             }
             else {
-              $location.url('/landing');
+              $location.url('/dashboard');
             }
           }
           else {
-            flash.add('Invalid username or password.', 'error')
+            flash.add('Invalid username or password.', 'error');
           }
         });
     };

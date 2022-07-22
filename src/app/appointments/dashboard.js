@@ -1,9 +1,9 @@
-angular.module('appoints.landing', [
+angular.module('appoints.dashboard', [
     'appoints.config',
     'appoints.usersession'
 ])
 
-    .controller('LandingPageCtrl', function LandingPageController($scope, config, usersession, $http, $location, flash) {
+    .controller('DashboardCtrl', function DashboardController($scope, config, usersession, $http, $location, flash) {
         $scope.user = usersession.current;
         $scope.getDoctors = function () {
             var reqURL = config.apiEndpoint + "/doctors";

@@ -10,6 +10,7 @@
   <title ng-bind-template="{{pageTitle}} | Doctor's Appointment"></title>
   <!-- inject:vendor:css -->
   <link rel="stylesheet" href="/angular-bootstrap-datetimepicker/src/css/datetimepicker.css">
+  <link rel="stylesheet" href="/fullcalendar/dist/fullcalendar.css">
   <!-- endinject -->
   <!-- inject:css -->
   <link rel="stylesheet" href="/css/app.css">
@@ -32,10 +33,11 @@
       </div>
       <nav class="collapse navbar-collapse" role="navigation">
         <ul class="nav navbar-nav">
+          <li ng-class="{active: routeIs('/createappointment')}"><a href="#/createappointment" translate>Create Appointment</a></li>
           <li ng-class="{active: routeIs('/appointments')}" ng-show='user.isAuthenticated'><a href="#/appointments"
               translate>Appointments</a></li>
-          <li ng-class="{active: routeIs('/landing')}" ng-show='user.isAuthenticated'><a href="#/landing"
-              translate>Landing Page</a></li>
+          <li ng-class="{active: routeIs('/dashboard')}" ng-show='user.isAuthenticated'><a href="#/dashboard"
+              translate>Dashboard</a></li>
         </ul>
         <ul class="nav navbar-right" ng-show="!user.isAuthenticated">
           <li ng-class="{ active: routeIs('/usersignin') }">
@@ -75,20 +77,24 @@
   <script src="/lodash/dist/lodash.compat.js"></script>
   <script src="/moment/moment.js"></script>
   <script src="/angular-bootstrap-datetimepicker/src/js/datetimepicker.js"></script>
+  <script src="/fullcalendar/dist/fullcalendar.js"></script>
   <script src="/bootstrap/dist/js/bootstrap.js"></script>
   <script src="/angular-hal/angular-hal.js"></script>
+  <script src="/angular-ui-calendar/src/calendar.js"></script>
   <!-- endinject -->
   <!-- inject:js -->
   <script src="/appoints-client-templates.js"></script>
+  <script src="/calendar.js"></script>
   <script src="/config.js"></script>
   <script src="/shared/directives.js"></script>
   <script src="/shared/flash.js"></script>
+  <script src="/appointments/CreateAppointment.js"></script>
   <script src="/home/home.js"></script>
   <script src="/shared/appointsapi.js"></script>
   <script src="/appointments/appointments.js"></script>
   <script src="/appointments/usersignup.js"></script>
   <script src="/auth/usersession.js"></script>
-  <script src="/appointments/landingpage.js"></script>
+  <script src="/appointments/dashboard.js"></script>
   <script src="/appointments/logindetails.js"></script>
   <script src="/appointments/profile.js"></script>
   <script src="/appointments/usersignin.js"></script>

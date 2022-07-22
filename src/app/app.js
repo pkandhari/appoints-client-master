@@ -10,8 +10,9 @@ angular.module('appoints', [
   'appoints.signin',
   'appoints.logindetails',
   'appoints.signup',
-  'appoints.landing',
+  'appoints.dashboard',
   'appoints.profile',
+  'appoints.createappointment',
   'appoints.appointments',
   'appoints-client-templates'
 ])
@@ -31,11 +32,6 @@ angular.module('appoints', [
         templateUrl: 'home/home.html',
         controller: 'HomeCtrl',
         title: 'Home'
-      })
-      .when('/login', {
-        templateUrl: 'auth/login.html',
-        controller: 'LoginCtrl',
-        title: 'Login'
       })
       .when('/appointments', {
         templateUrl: 'appointments/appointments.html',
@@ -57,10 +53,15 @@ angular.module('appoints', [
         controller: 'LoginDetailsCtrl',
         title: 'LoginDetails'
       })
-      .when('/landing', {
-        templateUrl: 'appointments/landingpage.html',
-        controller: 'LandingPageCtrl',
-        title: 'LandingPage'
+      .when('/dashboard', {
+        templateUrl: 'appointments/dashboard.html',
+        controller: 'DashboardCtrl',
+        title: 'Dashboard'
+      })
+      .when('/createappointment', {
+        templateUrl: 'appointments/CreateAppointment.html',
+        controller: 'CreateAppointmentCtrl',
+        title: 'CreateAppointment'
       })
       .when('/profile/:isreadonly/:isdoctor/:userid', {
         templateUrl: 'appointments/profile.html',
