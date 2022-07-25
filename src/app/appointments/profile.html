@@ -1,7 +1,7 @@
 <div class="" ng-app="appoints" ng-controller="ProfileCtrl">
     <div style="font-size: larger;padding-left: 5%;" ng-if="isreadonly">
         <a class="dropdown-toggle" role="button" title="Go to Dashboard" id="patient{{$index}}" href=""
-            ng-click="goToLandingPage()"><span class="glyphicon glyphicon-circle-arrow-left"></span>Go to dashboard</a>
+            ng-click="goToDashboard()"><span class="glyphicon glyphicon-circle-arrow-left"></span>Go to dashboard</a>
     </div>
     <h2 ng-if="!dataLoading" style="text-align: center;">Details of:
         <b>{{profileData.UserDetails.FirstName}} {{profileData.UserDetails.LastName}}</b>
@@ -11,6 +11,7 @@
             <div class="form-group col-md-12"
                 ng-class="{ 'has-error': form.email.$dirty && (form.email.$error.required || form.email.$error.email) }">
                 <label for="email">Email</label>
+                <span class="mandatoryField" style="color: red;">*</span>
                 <input type="email" name="email" id="email" class="form-control" ng-readonly="{{isreadonly}}"
                     ng-model="profileData.UserDetails.Email" required />
                 <span ng-show="form.email.$dirty && form.email.$error.email" class="help-block">This email format is
@@ -23,6 +24,7 @@
             <div class="form-group col-md-6"
                 ng-class="{ 'has-error': form.firstName.$dirty && form.firstName.$error.required }">
                 <label for="firstName">First name</label>
+                <span class="mandatoryField" style="color: red;">*</span>
                 <input type="text" name="firstName" id="firstName" class="form-control" ng-readonly="{{isreadonly}}"
                     ng-model="profileData.UserDetails.FirstName" required />
                 <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">First name is
@@ -31,6 +33,7 @@
             <div class="form-group col-md-6"
                 ng-class="{ 'has-error': form.lastName.$dirty && form.lastName.$error.required }">
                 <label for="lastName">Last name</label>
+                <span class="mandatoryField" style="color: red;">*</span>
                 <input type="text" name="lastName" id="lastName" class="form-control" ng-readonly="{{isreadonly}}"
                     ng-model="profileData.UserDetails.LastName" required />
                 <span ng-show="form.lastName.$dirty && form.lastName.$error.required" class="help-block">Last name is

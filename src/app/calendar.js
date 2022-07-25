@@ -13,8 +13,8 @@ angular.module('ui.calendar', [])
     .constant('uiCalendarConfig', {
         calendars : {}
     })
-    .controller('uiCalendarCtrl', ['$scope', '$locale',
-        function ($scope, $locale) {
+    .controller('uiCalendarCtrl', ['$scope', '$locale', 'moment',
+        function ($scope, $locale, moment) {
 
             var sources = $scope.eventSources;
             var extraEventSignature = $scope.calendarWatchEvent ? $scope.calendarWatchEvent : angular.noop;

@@ -3,7 +3,7 @@ angular.module('appoints.signup', [
     'appoints.api'
 ])
 
-    .controller('UserSignupCtrl', function UserSignupController($scope,usersession, $location) {
+    .controller('UserSignupCtrl', function UserSignupController($scope, usersession, $location) {
         $scope.signupObj = {
             'email': '',
             'firstName': '',
@@ -16,6 +16,9 @@ angular.module('appoints.signup', [
         };
 
         $scope.signup = function () {
+            if ($scope.signupObj.isPractitioner) {
+                $scope.signupObj.firstName = 'Dr. ' + $scope.signupObj.firstName;
+            }
             usersession.signup($scope.signupObj)
                 .then(function (result) {
                     var userResource = result.data;

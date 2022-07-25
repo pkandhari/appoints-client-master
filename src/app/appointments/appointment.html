@@ -1,12 +1,16 @@
-<div id="example" ng-app="appoints">
-    <div class="col-md-4">
-        <h2 style="text-align: center;"><b>Create new appointment</b></h2>
+<div ng-app="appoints" class="row">
+    <div style="font-size: larger;padding-left: 1%;">
+        <a class="dropdown-toggle" role="button" title="Go to Dashboard" id="patient{{$index}}" href=""
+            ng-click="goToDashboard()"><span class="glyphicon glyphicon-circle-arrow-left"></span>Go to dashboard</a>
+    </div>
+    <div class="col-md-6">
+        <h2 style="text-align: center;"><b>Appointment Details</b></h2>
 
         <form role="form" name="form">
             <div class="form-group">
                 <label for="doctor">Doctor</label>
                 <span class="mandatoryField" style="color: red;">*</span>
-                <select class="form-control" id="doctor"
+                <select class="form-control" id="doctor" ng-readonly="{{isreadonly}}"
                     ng-options="doctor as doctor.UserDetails.FirstName for doctor in doctors track by doctor.DoctorId"
                     ng-model="doctor" ng-change="optionChange()" required>
                     <option value="" disabled selected>Select your option</option>
@@ -16,7 +20,7 @@
                 <label for="title">Title</label>
                 <span class="mandatoryField" style="color: red;">*</span>
                 <input type="text" class="form-control" id="title" placeholder="Enter appointment description"
-                    ng-model="newAppointment.title" required>
+                    ng-model="editAppointment.Title" ng-readonly="{{isreadonly}}" required>
             </div>
             <div class="form-group">
                 <label for="dateAndTime">Appointment date and time</label>
@@ -25,12 +29,12 @@
                     <a class="dropdown-toggle" id="dropdown1" role="button" data-toggle="dropdown">
                         <div class="input-group">
                             <input type="text" required data-date-time-input="MM/DD/YYYY HH:mm:ss" class="form-control"
-                                data-ng-model="newAppointment.dateAndTime" required>
+                                data-ng-model="editAppointment.DateAndTime" ng-readonly="{{isreadonly}}" required>
                             <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                         </div>
                     </a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                        <datetimepicker data-ng-model="newAppointment.dateAndTime"
+                        <datetimepicker data-ng-model="editAppointment.DateAndTime" ng-readonly="{{isreadonly}}"
                             data-datetimepicker-config="{ dropdownSelector: '#dropdown1', startView: 'hour', minuteStep: 15 }">
                         </datetimepicker>
                     </ul>
@@ -39,7 +43,8 @@
             <div class="form-group">
                 <label for="duration">Duration</label>
                 <span class="mandatoryField" style="color: red;">*</span>
-                <select class="form-control" id="duration" ng-model="newAppointment.duration" required>
+                <select class="form-control" id="duration" ng-model="editAppointment.Duration"
+                    ng-readonly="{{isreadonly}}" required>
                     <option value="15">15 minutes</option>
                     <option value="30">30 minutes</option>
                     <option value="60">60 minutes</option>
@@ -49,23 +54,11 @@
             <div class="form-group">
                 <label for="remarks">Remarks</label>
                 <textarea id="remarks" class="form-control" rows="4" placeholder="Enter additional remarks"
-                    ng-model="newAppointment.remarks"> </textarea>
+                    ng-model="editAppointment.Remarks"></textarea>
             </div>
-            <button type="submit" class="btn btn-default" ng-click="createAppointment()"
-                ng-disabled="form.$invalid">Create</button>
+            <button type="submit" class="btn btn-default" ng-click="updateAppointment()"
+                ng-disabled="form.$invalid">Submit</button>
         </form>
-    </div>
 
-    <div class="col-md-8">
-        <h2 style="text-align: center;"><b>Doctor's Appointment Calendar</b></h2>
-        <div class="btn-toolbar">
-            <div class="btn-group">
-                <button class="btn btn-success" ng-click="changeView('agendaDay', 'myCalendar')">AgendaDay</button>
-                <button class="btn btn-success" ng-click="changeView('agendaWeek', 'myCalendar')">AgendaWeek</button>
-                <button class="btn btn-success" ng-click="changeView('month', 'myCalendar')">Month</button>
-            </div>
-        </div>
-        <div class="calendar" ng-model="eventSources" calendar="myCalendar" ui-calendar="uiConfig.calendar"></div>
     </div>
-
 </div>

@@ -3,7 +3,7 @@ angular.module('appoints.createappointment', [
     'ui.calendar'
 ])
 
-    .controller('CreateAppointmentCtrl', function CreateAppointmentController($scope, $compile, $timeout, uiCalendarConfig, config, $http, _, flash, moment) {
+    .controller('CreateAppointmentCtrl', function CreateAppointmentController($scope, $compile, usersession, $timeout, $location, uiCalendarConfig, config, $http, _, flash, moment) {
 
         function initAppointment() {
             $scope.newAppointment = {
@@ -13,17 +13,17 @@ angular.module('appoints.createappointment', [
                 remarks: ''
             };
             $scope.editAppointment = null;
-        };
+        }
 
         initAppointment();
 
-        $scope.getEndTime = function (appointment) {
-            return moment(appointment.dateAndTime).add(appointment.duration, 'minutes').format('H:mm');
-        };
+        // $scope.getEndTime = function (appointment) {
+        //     return moment(appointment.dateAndTime).add(appointment.duration, 'minutes').format('H:mm');
+        // };
 
         $scope.createAppointment = function () {
-            $scope.newAppointment.patientId = 1;
-            $scope.newAppointment.doctorId = 1;
+            $scope.newAppointment.patientId = usersession.current.userId;
+            $scope.newAppointment.doctorId = $scope.doctor.DoctorId;
             var reqURL = config.apiEndpoint + "/appointments";
 
             var req = {
@@ -34,8 +34,20 @@ angular.module('appoints.createappointment', [
             return $http(req)
                 .then(function () {
                     flash.add('Appointment created successfully', 'info');
-                    initAppointment();
-                    $scope.getAppointments();
+                    $location.url('/dashboard');
+                }, function (err) {
+                    flash.add(err.data.ExceptionMessage, 'error');
+                });
+        };
+
+        $scope.getDoctors = function () {
+            var req = {
+                method: "GET",
+                url: config.apiEndpoint + "/doctors"
+            };
+            return $http(req)
+                .then(function (result) {
+                    $scope.doctors = result.data;
                 }, function (err) {
                     flash.add(err.data.ExceptionMessage, 'error');
                 });
@@ -43,8 +55,7 @@ angular.module('appoints.createappointment', [
 
         $scope.getAppointments = function () {
             $scope.calEventsExt.events = [];
-            $scope.newAppointment.doctorId = 1;
-            var reqURL = config.apiEndpoint + "/doctors/" + $scope.newAppointment.doctorId + "/appointments";
+            var reqURL = config.apiEndpoint + "/doctors/" + $scope.doctor.UserDetails.UserId + "/appointments";
 
             var req = {
                 method: "GET",
@@ -69,10 +80,6 @@ angular.module('appoints.createappointment', [
             $scope.calEventsExt.events.push(appointment);
         };
 
-        $scope.setAppointmentForEdit = function (appointment) {
-            $scope.editAppointment = angular.copy(appointment);
-        };
-
         $scope.calEventsExt = {
             // color: '#f00',
             // textColor: 'yellow',
@@ -92,7 +99,6 @@ angular.module('appoints.createappointment', [
         $scope.changeView = function (view, calendar) {
             uiCalendarConfig.calendars[calendar].fullCalendar('changeView', view);
         };
-
         /* Change View */
         $scope.renderCalendar = function (calendar) {
             $timeout(function () {
@@ -126,8 +132,12 @@ angular.module('appoints.createappointment', [
             }
         };
 
-        $scope.getAppointments();
+        $scope.optionChange = function () {
+            $scope.getAppointments();
+        };
 
         /* event sources array*/
         $scope.eventSources = [$scope.calEventsExt];
+
+        $scope.getDoctors();
     });

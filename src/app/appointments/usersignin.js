@@ -11,7 +11,7 @@ angular.module('appoints.signin', [
     $scope.login = function () {
       var loginObj = {};
       loginObj.username = $scope.username;
-      loginObj.userPassword = $scope.password;
+      loginObj.password = $scope.password;
       usersession.login(loginObj)
         .then(function () {
           if (usersession.current.isAuthenticated) {

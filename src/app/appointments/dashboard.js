@@ -37,8 +37,13 @@ angular.module('appoints.dashboard', [
                 url: config.apiEndpoint + "/appointments"
             };
             return $http(req)
-                .then(function (result) {
-                    $scope.appointments = result.data;
+                .then(function (appointments) {
+                    $scope.upcomingAdminAppointments = _.filter(appointments.data, function (appointment) {
+                        return moment(appointment.DateAndTime) > moment();
+                    });
+                    $scope.pastAdminAppointments = _.filter(appointments.data, function (appointment) {
+                        return moment(appointment.DateAndTime) <= moment();
+                    });
                 }, function (err) {
                     flash.add(err.data.ExceptionMessage, 'error');
                 });
@@ -51,13 +56,20 @@ angular.module('appoints.dashboard', [
             };
             return $http(req)
                 .then(function (appointments) {
-                    $scope.eventSourceDoctor = _.filter(appointments.data, function (appointment) {
+                    $scope.upcomingDoctorAppointments = _.filter(appointments.data, function (appointment) {
+                        appointment.title = appointment.Title;
+                        appointment.start = moment(appointment.DateAndTime);
+                        appointment.end = moment(appointment.DateAndTime).add(appointment.Duration, 'minutes');
+                        appointment.allDay = false;
+                        return moment(appointment.DateAndTime) > moment();
+                    });
+                    $scope.pastDoctorAppointments = _.filter(appointments.data, function (appointment) {
                         appointment.title = appointment.Title;
                         appointment.start = moment(appointment.DateAndTime);
                         appointment.end = moment(appointment.DateAndTime).add(appointment.Duration, 'minutes');
                         appointment.allDay = false;
                         $scope.addEventDoc(appointment);
-                        return appointment;
+                        return moment(appointment.DateAndTime) <= moment();
                     });
                 }, function (err) {
                     flash.add(err.data.ExceptionMessage, 'error');
@@ -71,14 +83,48 @@ angular.module('appoints.dashboard', [
             };
             return $http(req)
                 .then(function (appointments) {
-                    $scope.eventSourcePatient = _.filter(appointments.data, function (appointment) {
+                    $scope.upcomingPatientAppointments = _.filter(appointments.data, function (appointment) {
+                        appointment.title = appointment.Title;
+                        appointment.start = moment(appointment.DateAndTime);
+                        appointment.end = moment(appointment.DateAndTime).add(appointment.Duration, 'minutes');
+                        appointment.allDay = false;
+                        return moment(appointment.DateAndTime) > moment();
+                    });
+                    $scope.pastPatientAppointments = _.filter(appointments.data, function (appointment) {
                         appointment.title = appointment.Title;
                         appointment.start = moment(appointment.DateAndTime);
                         appointment.end = moment(appointment.DateAndTime).add(appointment.Duration, 'minutes');
                         appointment.allDay = false;
                         $scope.addEventPat(appointment);
-                        return appointment;
+                        return moment(appointment.DateAndTime) <= moment();
                     });
+                }, function (err) {
+                    flash.add(err.data.ExceptionMessage, 'error');
+                });
+        };
+
+        $scope.deleteAppointment = function (appointment) {
+            var req = {
+                method: "DELETE",
+                url: config.apiEndpoint + "/appointments/" + appointment.AppointmentId
+            };
+            return $http(req)
+                .then(function (appointments) {
+                    // $scope.upcomingAppointments = _.filter(appointments.data, function (appointment) {
+                    //     appointment.title = appointment.Title;
+                    //     appointment.start = moment(appointment.DateAndTime);
+                    //     appointment.end = moment(appointment.DateAndTime).add(appointment.Duration, 'minutes');
+                    //     appointment.allDay = false;
+                    //     return moment(appointment.DateAndTime) > moment();
+                    // });
+                    // $scope.pastAppointments = _.filter(appointments.data, function (appointment) {
+                    //     appointment.title = appointment.Title;
+                    //     appointment.start = moment(appointment.DateAndTime);
+                    //     appointment.end = moment(appointment.DateAndTime).add(appointment.Duration, 'minutes');
+                    //     appointment.allDay = false;
+                    //     $scope.addEventPat(appointment);
+                    //     return moment(appointment.DateAndTime) <= moment();
+                    // });
                 }, function (err) {
                     flash.add(err.data.ExceptionMessage, 'error');
                 });
@@ -103,7 +149,7 @@ angular.module('appoints.dashboard', [
         $scope.calEventsPat = {
             events: []
         };
-        
+
         $scope.eventSources = [$scope.calEventsExt];
         $scope.eventSourceDoctor = [$scope.calEventsDoc];
         $scope.eventSourcePatient = [$scope.calEventsPat];
@@ -116,6 +162,15 @@ angular.module('appoints.dashboard', [
             $location.url('/profile/true/false/' + patient.UserDetails.UserId);
         };
 
+        $scope.openAppointment = function (appointment) {
+            if (moment(appointment.DateAndTime) <= moment()) {
+                $location.url('/appointment/true/' + appointment.AppointmentId);
+            }
+            else {
+                $location.url('/appointment/false/' + appointment.AppointmentId);
+            }
+        };
+
         $scope.openAppointmentDoctor = function (appointment) {
             $location.url('/profile/true/true/' + appointment.DoctorUserId);
         };
@@ -124,42 +179,31 @@ angular.module('appoints.dashboard', [
             $location.url('/profile/true/false/' + appointment.PatientUserId);
         };
 
-        $scope.getDoctors();
-        $scope.getPatients();
-        $scope.getAppointments();
-        $scope.getDoctorAppointments();
-        $scope.getPatientAppointments();
+        if (usersession.current.isAdmin) {
+            $scope.getDoctors();
+            $scope.getPatients();
+            $scope.getAppointments();
+        }
+        else if (usersession.current.isDoctor) {
+            $scope.getDoctorAppointments();
+        }
+        else {
+            $scope.getPatientAppointments();
+        }
 
 
 
 
-        $scope.getAppointments = function () {
-            $scope.calEventsExt.events = [];
-            $scope.newAppointment.doctorId = 1;
-            var reqURL = config.apiEndpoint + "/doctors/" + $scope.newAppointment.doctorId + "/appointments";
 
-            var req = {
-                method: "GET",
-                url: reqURL
-            };
-            return $http(req)
-                .then(function (appointments) {
-                    $scope.eventSources3 = _.filter(appointments.data, function (appointment) {
-                        appointment.title = appointment.Title;
-                        appointment.start = moment(appointment.DateAndTime);
-                        appointment.end = moment(appointment.DateAndTime).add(appointment.Duration, 'minutes');
-                        appointment.allDay = false;
-                        $scope.addEvent(appointment);
-                        return appointment;
-                    });
-                }, function (err) {
-                    flash.add(err.data.ExceptionMessage, 'error');
-                });
-        };
-
-        /* alert on eventClick */
-        $scope.alertOnEventClick = function (date) {
-            $scope.alertMessage = (date.title + ' was clicked ');
+        /* eventClick */
+        $scope.eventClick = function (appointment) {
+            if (moment(appointment.DateAndTime) <= moment()) {
+                $location.url('/appointment/true/' + appointment.AppointmentId);
+            }
+            else {
+                $location.url('/appointment/false/' + appointment.AppointmentId);
+            }
+            // $scope.alertMessage = (date.title + ' was clicked ');
         };
 
         /* Change View */
@@ -193,7 +237,7 @@ angular.module('appoints.dashboard', [
                     center: '',
                     right: 'today prev,next'
                 },
-                eventClick: $scope.alertOnEventClick,
+                eventClick: $scope.eventClick,
                 eventDrop: $scope.alertOnDrop,
                 eventResize: $scope.alertOnResize,
                 eventRender: $scope.eventRender

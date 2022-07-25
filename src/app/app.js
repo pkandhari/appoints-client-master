@@ -4,7 +4,6 @@ angular.module('appoints', [
   'appoints.directives',
   'appoints.flash',
   'appoints.usersession',
-  'appoints.authinterceptor',
   'appoints.home',
   'appoints.signin',
   'appoints.logindetails',
@@ -12,7 +11,7 @@ angular.module('appoints', [
   'appoints.dashboard',
   'appoints.profile',
   'appoints.createappointment',
-  'appoints.appointments',
+  'appoints.appointment',
   'appoints-client-templates'
 ])
 
@@ -32,10 +31,10 @@ angular.module('appoints', [
         controller: 'HomeCtrl',
         title: 'Home'
       })
-      .when('/appointments', {
-        templateUrl: 'appointments/appointments.html',
-        controller: 'AppointmentsCtrl',
-        title: 'Appointments'
+      .when('/appointment/:isreadonly/:appointmentid', {
+        templateUrl: 'appointments/appointment.html',
+        controller: 'AppointmentCtrl',
+        title: 'Appointment'
       })
       .when('/usersignin', {
         templateUrl: 'appointments/usersignin.html',

@@ -44,7 +44,7 @@ angular.module('appoints.profile', [
                 });
         };
 
-        $scope.goToLandingPage = function () {
+        $scope.goToDashboard = function () {
             $location.url('/dashboard');
         };
 

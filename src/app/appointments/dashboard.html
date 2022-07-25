@@ -29,13 +29,29 @@
         </ul>
     </div>
     <div class="col-md-4" ng-if="user.isAdmin">
-        <h2><b>List of Appointments</b></h2>
-        <p ng-if="appointments.length === 0">-- None --</p>
+        <h2><b>Upcoming Appointments</b></h2>
+        <p ng-if="upcomingAdminAppointments.length === 0">-- None --</p>
         <ul class="list-group">
-            <li class="list-group-item" ng-repeat="appointment in appointments">
-                <h4 class="list-group-item-heading"><b>{{appointment.Title}}</b> <small>{{appointment.DateAndTime |
-                        date:'d MMM, y H:mm'}},
-                        duration: {{appointment.Duration}} mins</small></h4>
+            <li class="list-group-item" ng-repeat="appointment in upcomingAdminAppointments">
+                <h4 class="list-group-item-heading"><a href=""
+                        ng-click="openAppointment(appointment)"><b>{{appointment.Title}}</b></a></h4>
+                <h5 class="list-group-item-heading">{{appointment.DateAndTime |
+                    date:'d MMM, y H:mm'}}, duration: {{appointment.Duration}} mins</h5>
+                <h5 class="list-group-item-heading">Patient: <a href=""
+                        ng-click="openAppointmentPatient(appointment)">{{appointment.PatientName}}</a></h5>
+                <h5 class="list-group-item-heading">Doctor: <a href=""
+                        ng-click="openAppointmentDoctor(appointment)">{{appointment.DoctorName}}</a></h5>
+                <h5 class="list-group-item-heading">Remarks: {{appointment.Remarks}}</h5>
+            </li>
+        </ul>
+        <h2><b>Past Appointments</b></h2>
+        <p ng-if="pastAdminAppointments.length === 0">-- None --</p>
+        <ul class="list-group">
+            <li class="list-group-item" ng-repeat="appointment in pastAdminAppointments">
+                <h4 class="list-group-item-heading"><a href=""
+                        ng-click="openAppointment(appointment)"><b>{{appointment.Title}}</b></a></h4>
+                <h5 class="list-group-item-heading">{{appointment.DateAndTime |
+                    date:'d MMM, y H:mm'}}, duration: {{appointment.Duration}} mins</h5>
                 <h5 class="list-group-item-heading">Patient: <a href=""
                         ng-click="openAppointmentPatient(appointment)">{{appointment.PatientName}}</a></h5>
                 <h5 class="list-group-item-heading">Doctor: <a href=""
@@ -46,13 +62,27 @@
     </div>
 
     <div class="col-md-4" ng-if="!user.isAdmin && user.isDoctor">
-        <h2><b>List of Doctor's Appointments</b></h2>
-        <p ng-if="eventSourceDoctor.length === 0">-- None --</p>
+        <h2><b>Upcoming Appointments</b></h2>
+        <p ng-if="upcomingDoctorAppointments.length === 0">-- None --</p>
         <ul class="list-group">
-            <li class="list-group-item" ng-repeat="appointment in eventSourceDoctor">
-                <h4 class="list-group-item-heading"><b>{{appointment.Title}}</b> <small>{{appointment.DateAndTime |
-                        date:'d MMM, y H:mm'}},
-                        duration: {{appointment.Duration}} mins</small></h4>
+            <li class="list-group-item" ng-repeat="appointment in upcomingDoctorAppointments">
+                <h4 class="list-group-item-heading"><a href=""
+                        ng-click="openAppointment(appointment)"><b>{{appointment.Title}}</b></a></h4>
+                <h5 class="list-group-item-heading">{{appointment.DateAndTime |
+                    date:'d MMM, y H:mm'}}, duration: {{appointment.Duration}} mins</h5>
+                <h5 class="list-group-item-heading">Patient: <a href=""
+                        ng-click="openAppointmentPatient(appointment)">{{appointment.PatientName}}</a></h5>
+                <h5 class="list-group-item-heading">Remarks: {{appointment.Remarks}}</h5>
+            </li>
+        </ul>
+        <h2><b>Past Appointments</b></h2>
+        <p ng-if="pastDoctorAppointments.length === 0">-- None --</p>
+        <ul class="list-group">
+            <li class="list-group-item" ng-repeat="appointment in pastDoctorAppointments">
+                <h4 class="list-group-item-heading"><a href=""
+                        ng-click="openAppointment(appointment)"><b>{{appointment.Title}}</b></a></h4>
+                <h5 class="list-group-item-heading">{{appointment.DateAndTime |
+                    date:'d MMM, y H:mm'}}, duration: {{appointment.Duration}} mins</h5>
                 <h5 class="list-group-item-heading">Patient: <a href=""
                         ng-click="openAppointmentPatient(appointment)">{{appointment.PatientName}}</a></h5>
                 <h5 class="list-group-item-heading">Remarks: {{appointment.Remarks}}</h5>
@@ -72,15 +102,33 @@
     </div>
 
     <div class="col-md-4" ng-if="!user.isAdmin && !user.isDoctor">
-        <h2><b>List of Patient's Appointments</b></h2>
-        <p ng-if="eventSourcePatient.length === 0">-- None --</p>
+        <h2><b>Upcoming appointments</b></h2>
+        <p ng-if="upcomingPatientAppointments.length === 0">-- None --</p>
         <ul class="list-group">
-            <li class="list-group-item" ng-repeat="appointment in eventSourcePatient">
-                <h4 class="list-group-item-heading"><b>{{appointment.Title}}</b> <small>{{appointment.DateAndTime |
-                        date:'d MMM, y H:mm'}},
-                        duration: {{appointment.Duration}} mins</small></h4>
+            <li class="list-group-item" ng-repeat="appointment in upcomingPatientAppointments">
+                <div>
+                    <a href="" class="pull-right" ng-click="deleteAppointment(appointment)"
+                        title="Delete Appointment"><span class="glyphicon glyphicon-remove"></span></a>
+                </div>
+                <h4 class="list-group-item-heading"><a href=""
+                        ng-click="openAppointment(appointment)"><b>{{appointment.Title}}</b></a></h4>
+                <h5 class="list-group-item-heading">{{appointment.DateAndTime |
+                    date:'d MMM, y H:mm'}}, duration: {{appointment.Duration}} mins</h5>
                 <h5 class="list-group-item-heading">Doctor: <a href=""
-                        ng-click="openAppointmentPatient(appointment)">{{appointment.DoctorName}}</a></h5>
+                        ng-click="openAppointmentDoctor(appointment)">{{appointment.DoctorName}}</a></h5>
+                <h5 class="list-group-item-heading">Remarks: {{appointment.Remarks}}</h5>
+            </li>
+        </ul>
+        <h2><b>Past appointments</b></h2>
+        <p ng-if="pastPatientAppointments.length === 0">-- None --</p>
+        <ul class="list-group">
+            <li class="list-group-item" ng-repeat="appointment in pastPatientAppointments">
+                <h4 class="list-group-item-heading"><a href=""
+                        ng-click="openAppointment(appointment)"><b>{{appointment.Title}}</b></a></h4>
+                <h5 class="list-group-item-heading">{{appointment.DateAndTime |
+                    date:'d MMM, y H:mm'}}, duration: {{appointment.Duration}} mins</h5>
+                <h5 class="list-group-item-heading">Doctor: <a href=""
+                        ng-click="openAppointmentDoctor(appointment)">{{appointment.DoctorName}}</a></h5>
                 <h5 class="list-group-item-heading">Remarks: {{appointment.Remarks}}</h5>
             </li>
         </ul>
