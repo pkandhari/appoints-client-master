@@ -13,7 +13,7 @@ angular.module('appoints.createappointment', [
                 remarks: ''
             };
             $scope.editAppointment = null;
-        }
+        };
 
         initAppointment();
 

@@ -28,12 +28,13 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a href="#/"><img src="assets/images/DocConnect1.png"></a>
+        <a href="#/dashboard"><img src="assets/images/DocConnect1.png" style="height: 50px;"></a>
         <!-- <a href="#/" class="navbar-brand">DOC Connect</a> -->
       </div>
       <nav class="collapse navbar-collapse" role="navigation">
         <ul class="nav navbar-nav">
-          <li ng-class="{active: routeIs('/createappointment')}"><a href="#/createappointment" translate>Create Appointment</a></li>
+          <li ng-class="{active: routeIs('/createappointment')}" ng-show='user.isAuthenticated && !user.isAdmin && !user.isDoctor'><a
+              href="#/createappointment" translate>Create Appointment</a></li>
           <li ng-class="{active: routeIs('/appointments')}" ng-show='user.isAuthenticated'><a href="#/appointments"
               translate>Appointments</a></li>
           <li ng-class="{active: routeIs('/dashboard')}" ng-show='user.isAuthenticated'><a href="#/dashboard"
@@ -83,6 +84,7 @@
   <script src="/angular-ui-calendar/src/calendar.js"></script>
   <!-- endinject -->
   <!-- inject:js -->
+  <script src="/appointments/appointments.js"></script>
   <script src="/appoints-client-templates.js"></script>
   <script src="/calendar.js"></script>
   <script src="/config.js"></script>
@@ -91,7 +93,6 @@
   <script src="/appointments/CreateAppointment.js"></script>
   <script src="/home/home.js"></script>
   <script src="/shared/appointsapi.js"></script>
-  <script src="/appointments/appointments.js"></script>
   <script src="/appointments/usersignup.js"></script>
   <script src="/auth/usersession.js"></script>
   <script src="/appointments/dashboard.js"></script>
@@ -99,7 +100,6 @@
   <script src="/appointments/profile.js"></script>
   <script src="/appointments/usersignin.js"></script>
   <script src="/auth/authinterceptor.js"></script>
-  <script src="/auth/login.js"></script>
   <script src="/app.js"></script>
   <!-- endinject -->
 </body>

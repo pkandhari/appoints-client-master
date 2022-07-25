@@ -6,7 +6,6 @@ angular.module('appoints', [
   'appoints.usersession',
   'appoints.authinterceptor',
   'appoints.home',
-  'appoints.login',
   'appoints.signin',
   'appoints.logindetails',
   'appoints.signup',

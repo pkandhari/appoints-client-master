@@ -1,3 +1,37 @@
+angular.module('appoints.appointments', ['ngRoute']).controller('AppointmentsCtrl', [
+  '$scope',
+  '$window',
+  '_',
+  'flash',
+  'moment',
+  function AppointmentsController($scope, $window, _, flash, moment) {
+    function initAppointment() {
+      $scope.newAppointment = {
+        title: '',
+        dateAndTime: moment().startOf('day').add(1, 'days').add(9, 'hours').toDate(),
+        duration: 30,
+        remarks: ''
+      };
+      $scope.editAppointment = null;
+    }
+    $scope.getEndTime = function (appointment) {
+      return moment(appointment.dateAndTime).add(appointment.duration, 'minutes').format('H:mm');
+    };
+    $scope.createAppointment = function () {
+      // Sync endDateAndTime first
+      $scope.newAppointment.endDateAndTime = moment($scope.newAppointment.dateAndTime).add($scope.newAppointment.duration, 'minutes');  // return rootResource.$post('appointments', null, $scope.newAppointment).then(function () {
+                                                                                                                                        //   flash.add('Appointment created successfully', 'info');
+                                                                                                                                        //   initAppointment();
+                                                                                                                                        // }, function (err) {
+                                                                                                                                        //   flash.addError(err.data);
+                                                                                                                                        // });
+    };
+    $scope.setAppointmentForEdit = function (appointment) {
+      $scope.editAppointment = angular.copy(appointment);
+    };
+    initAppointment();
+  }
+]);
 (function (module) {
   try {
     module = angular.module('appoints-client-templates');
@@ -7,7 +41,7 @@
   module.run([
     '$templateCache',
     function ($templateCache) {
-      $templateCache.put('appointments/appointments.html', '<div ng-app="appoints" class="row"><div class="col-md-6"><h2>Create new appointment</h2><form role="form" name="form"><div class="form-group"><input class="form-control" id="title" placeholder="Enter appointment description" ng-model="newAppointment.title"></div><div class="form-group"><label for="dateAndTime">Appointment date and time</label><div class="dropdown"><a class="dropdown-toggle" id="dropdown2" role="button" data-toggle="dropdown"><div class="input-group"><p class="form-control-static">{{ newAppointment.dateAndTime | date:\'d MMM, y H:mm\' }}</p></div></a><ul class="" role="menu" aria-labelledby="dLabel"><datetimepicker ng-model="newAppointment.dateAndTime" data-on-set-time="onTimeSet(newDate, oldDate)" datetimepicker-config="{ dropdownSelector: \'#dropdown2\', startView: \'hour\', minuteStep: 15 }"></ul></div></div><div class="form-group"><label for="duration">Duration</label><select class="form-control" id="duration" ng-model="newAppointment.duration"><option value="15">15 minutes</option><option value="30">30 minutes</option><option value="60">60 minutes</option><option value="90">90 minutes</option></select></div><div class="form-group"><label for="remarks">Remarks</label><textarea id="remarks" class="form-control" rows="3" ng-model="newAppointment.remarks"> </textarea></div><button type="submit" class="btn btn-default" ng-click="createAppointment()" ng-disabled="form.$invalid">Create</button></form></div><div class="col-md-6"><h2>Upcoming appointments</h2><p ng-if="upcomingAppointments.length === 0">-- None --</p><ul class="list-group"><li class="list-group-item" ng-repeat="appointment in upcomingAppointments"><div><div class="dropdown"><a href="" class="pull-right" ng-click="removeAppointment(appointment)" title="Remove"><span class="glyphicon glyphicon-remove"></span></a> <a class="dropdown-toggle" role="button" data-toggle="dropdown" data-target="#" title="Reschedule appointment" id="appointment{{$index}}" href="" ng-click="setAppointmentForEdit(appointment)"><span class="glyphicon glyphicon-time"></span></a><ul class="dropdown-menu" role="menu"><datetimepicker data-ng-model="editAppointment.dateAndTime" data-datetimepicker-config="{ dropdownSelector: \'#appointment{{$index}}\', startView: \'hour\', minuteStep: 15 }" on-set-time="reschedule(newDate, oldDate)"></ul></div></div><h4 class="list-group-item-heading">{{appointment.title}} <small>{{appointment.dateAndTime | date:\'d MMM, y H:mm\'}}-{{appointment.endDateAndTime | date:\'H:mm\'}}, duration {{appointment.duration}} mins</small></h4><p class="list-group-item-text">{{appointment.remarks}}</p></li></ul><h2>Past appointments</h2><p ng-if="pastAppointments.length === 0">-- None --</p><ul class="list-group"><li class="list-group-item" ng-repeat="appointment in pastAppointments"><div><a href="" class="pull-right" ng-click="removeAppointment(appointment)" title="Remove"><span class="glyphicon glyphicon-remove"></span></a></div><h4 class="list-group-item-heading">{{appointment.title}} <small>{{appointment.dateAndTime | date:\'d MMM, y H:mm\'}}-{{appointment.endDateAndTime | date:\'H:mm\'}}, duration {{appointment.duration}} mins</small></h4><p class="list-group-item-text">{{appointment.remarks}}</p></li></ul></div></div>');
+      $templateCache.put('appointments/appointments.html', '<div ng-app="appoints" class="row"><div class="col-md-6"><h2>Create new appointment</h2><form role="form" name="form"><div class="form-group"><input class="form-control" id="title" placeholder="Enter appointment description" ng-model="newAppointment.title"></div><div class="form-group"><label for="dateAndTime">Appointment date and time</label><div class="dropdown"><a class="dropdown-toggle" id="dropdown2" role="button" data-toggle="dropdown"><div class="input-group"><p class="form-control-static">{{ newAppointment.dateAndTime | date:\'d MMM, y H:mm\' }}</p></div></a><ul class="dropdown-menu" role="menu" aria-labelledby="dLabel"><datetimepicker ng-model="newAppointment.dateAndTime" data-on-set-time="onTimeSet(newDate, oldDate)" datetimepicker-config="{ dropdownSelector: \'#dropdown2\', startView: \'hour\', minuteStep: 15 }"></ul></div></div><div class="form-group"><label for="duration">Duration</label><select class="form-control" id="duration" ng-model="newAppointment.duration"><option value="15">15 minutes</option><option value="30">30 minutes</option><option value="60">60 minutes</option><option value="90">90 minutes</option></select></div><div class="form-group"><label for="remarks">Remarks</label><textarea id="remarks" class="form-control" rows="3" ng-model="newAppointment.remarks"> </textarea></div><button type="submit" class="btn btn-default" ng-click="createAppointment()" ng-disabled="form.$invalid">Create</button></form></div><div class="col-md-6"><h2>Upcoming appointments</h2><p ng-if="upcomingAppointments.length === 0">-- None --</p><ul class="list-group"><li class="list-group-item" ng-repeat="appointment in upcomingAppointments"><div><div class="dropdown"><a href="" class="pull-right" ng-click="removeAppointment(appointment)" title="Remove"><span class="glyphicon glyphicon-remove"></span></a> <a class="dropdown-toggle" role="button" data-toggle="dropdown" data-target="#" title="Reschedule appointment" id="appointment{{$index}}" href="" ng-click="setAppointmentForEdit(appointment)"><span class="glyphicon glyphicon-time"></span></a><ul class="dropdown-menu" role="menu"><datetimepicker data-ng-model="editAppointment.dateAndTime" data-datetimepicker-config="{ dropdownSelector: \'#appointment{{$index}}\', startView: \'hour\', minuteStep: 15 }" on-set-time="reschedule(newDate, oldDate)"></ul></div></div><h4 class="list-group-item-heading">{{appointment.title}} <small>{{appointment.dateAndTime | date:\'d MMM, y H:mm\'}}-{{appointment.endDateAndTime | date:\'H:mm\'}}, duration {{appointment.duration}} mins</small></h4><p class="list-group-item-text">{{appointment.remarks}}</p></li></ul><h2>Past appointments</h2><p ng-if="pastAppointments.length === 0">-- None --</p><ul class="list-group"><li class="list-group-item" ng-repeat="appointment in pastAppointments"><div><a href="" class="pull-right" ng-click="removeAppointment(appointment)" title="Remove"><span class="glyphicon glyphicon-remove"></span></a></div><h4 class="list-group-item-heading">{{appointment.title}} <small>{{appointment.dateAndTime | date:\'d MMM, y H:mm\'}}-{{appointment.endDateAndTime | date:\'H:mm\'}}, duration {{appointment.duration}} mins</small></h4><p class="list-group-item-text">{{appointment.remarks}}</p></li></ul></div></div>');
     }
   ]);
 }());
@@ -33,7 +67,7 @@
   module.run([
     '$templateCache',
     function ($templateCache) {
-      $templateCache.put('appointments/dashboard.html', '<div ng-app="appoints"><h1 style="text-align: center;padding-bottom: 25px"><b>Welcome! {{user.displayName}}</b></h1><div class="col-md-6"><h2>List of Doctors</h2><ul class="list-group"><li class="list-group-item" ng-repeat="doctor in doctors"><div><div class="dropdown"><a class="dropdown-toggle" role="button" data-toggle="dropdown" title="Open doctor details" id="doctor{{$index}}" href="" ng-click="openDoctorDetails(doctor)"><span class="glyphicon glyphicon-new-window"></span></a> </div></div><h4 class="list-group-item-heading">{{doctor.UserDetails.FirstName}} {{doctor.UserDetails.LastName}}, <small>Graduated from: {{doctor.GraduatedFrom}}, Practice: {{doctor.FieldOfPractice}}</small></h4><p class="list-group-item-text">{{doctor.CurrentWorkingStatus}}</p></li></ul></div><div class="col-md-6"><h2>List of Patients</h2><ul class="list-group"><li class="list-group-item" ng-repeat="patient in patients"><div><div class="dropdown"><a class="dropdown-toggle" role="button" data-toggle="dropdown" title="Open patient details" id="patient{{$index}}" href="" ng-click="openPatientDetails(patient)"><span class="glyphicon glyphicon-new-window"></span></a> </div></div><h4 class="list-group-item-heading">{{patient.UserDetails.FirstName}} {{patient.UserDetails.LastName}}, <small>Health Issues: {{patient.HealthIssues}}, Allergies: {{patient.Allergies}}</small></h4><p class="list-group-item-text">{{patient.CurrentWorkingStatus}}</p></li></ul></div></div>');
+      $templateCache.put('appointments/dashboard.html', '<div ng-app="appoints"><h1 style="text-align: center"><b>Welcome! {{user.displayName}}</b></h1><div class="col-md-4" ng-if="user.isAdmin"><h2><b>List of Doctors</b></h2><p ng-if="doctors.length === 0">-- None --</p><ul class="list-group"><li class="list-group-item" ng-repeat="doctor in doctors"><h4 class="list-group-item-heading"><a href="" ng-click="openDoctorDetails(doctor)"><b>{{doctor.UserDetails.FirstName}} {{doctor.UserDetails.LastName}}</b></a></h4><h5 class="list-group-item-heading">Graduated from: {{doctor.GraduatedFrom}}</h5><h5 class="list-group-item-heading">Practice: {{doctor.FieldOfPractice}}</h5><p class="list-group-item-text">{{doctor.CurrentWorkingStatus}}</p></li></ul></div><div class="col-md-4" ng-if="user.isAdmin"><h2><b>List of Patients</b></h2><p ng-if="patients.length === 0">-- None --</p><ul class="list-group"><li class="list-group-item" ng-repeat="patient in patients"><h4 class="list-group-item-heading"><a href="" ng-click="openPatientDetails(patient)"><b>{{patient.UserDetails.FirstName}} {{patient.UserDetails.LastName}}</b></a></h4><h5 class="list-group-item-heading">Health Issues: {{patient.HealthIssues}}</h5><h5 class="list-group-item-heading">Allergies: {{patient.Allergies}}</h5><p class="list-group-item-text">{{patient.CurrentWorkingStatus}}</p></li></ul></div><div class="col-md-4" ng-if="user.isAdmin"><h2><b>List of Appointments</b></h2><p ng-if="appointments.length === 0">-- None --</p><ul class="list-group"><li class="list-group-item" ng-repeat="appointment in appointments"><h4 class="list-group-item-heading"><b>{{appointment.Title}}</b> <small>{{appointment.DateAndTime | date:\'d MMM, y H:mm\'}}, duration: {{appointment.Duration}} mins</small></h4><h5 class="list-group-item-heading">Patient: <a href="" ng-click="openAppointmentPatient(appointment)">{{appointment.PatientName}}</a></h5><h5 class="list-group-item-heading">Doctor: <a href="" ng-click="openAppointmentDoctor(appointment)">{{appointment.DoctorName}}</a></h5><h5 class="list-group-item-heading">Remarks: {{appointment.Remarks}}</h5></li></ul></div><div class="col-md-4" ng-if="!user.isAdmin && user.isDoctor"><h2><b>List of Doctor\'s Appointments</b></h2><p ng-if="eventSourceDoctor.length === 0">-- None --</p><ul class="list-group"><li class="list-group-item" ng-repeat="appointment in eventSourceDoctor"><h4 class="list-group-item-heading"><b>{{appointment.Title}}</b> <small>{{appointment.DateAndTime | date:\'d MMM, y H:mm\'}}, duration: {{appointment.Duration}} mins</small></h4><h5 class="list-group-item-heading">Patient: <a href="" ng-click="openAppointmentPatient(appointment)">{{appointment.PatientName}}</a></h5><h5 class="list-group-item-heading">Remarks: {{appointment.Remarks}}</h5></li></ul></div><div class="col-md-8" ng-if="!user.isAdmin && user.isDoctor"><h2 style="text-align: center"><b>Doctor\'s Appointment Calendar</b></h2><div class="btn-toolbar"><div class="btn-group"><button class="btn btn-success" ng-click="changeView(\'agendaDay\', \'myCalendar\')">AgendaDay</button> <button class="btn btn-success" ng-click="changeView(\'agendaWeek\', \'myCalendar\')">AgendaWeek</button> <button class="btn btn-success" ng-click="changeView(\'month\', \'myCalendar\')">Month</button></div></div><div class="calendar" ng-model="eventSourceDoctor" calendar="myCalendar" ui-calendar="uiConfig.calendar"></div></div><div class="col-md-4" ng-if="!user.isAdmin && !user.isDoctor"><h2><b>List of Patient\'s Appointments</b></h2><p ng-if="eventSourcePatient.length === 0">-- None --</p><ul class="list-group"><li class="list-group-item" ng-repeat="appointment in eventSourcePatient"><h4 class="list-group-item-heading"><b>{{appointment.Title}}</b> <small>{{appointment.DateAndTime | date:\'d MMM, y H:mm\'}}, duration: {{appointment.Duration}} mins</small></h4><h5 class="list-group-item-heading">Doctor: <a href="" ng-click="openAppointmentPatient(appointment)">{{appointment.DoctorName}}</a></h5><h5 class="list-group-item-heading">Remarks: {{appointment.Remarks}}</h5></li></ul></div><div class="col-md-8" ng-if="!user.isAdmin && !user.isDoctor"><h2 style="text-align: center"><b>Patient\'s Appointment Calendar</b></h2><div class="btn-toolbar"><div class="btn-group"><button class="btn btn-success" ng-click="changeView(\'agendaDay\', \'myCalendar\')">AgendaDay</button> <button class="btn btn-success" ng-click="changeView(\'agendaWeek\', \'myCalendar\')">AgendaWeek</button> <button class="btn btn-success" ng-click="changeView(\'month\', \'myCalendar\')">Month</button></div></div><div class="calendar" ng-model="eventSourcePatient" calendar="myCalendar" ui-calendar="uiConfig.calendar"></div></div></div>');
     }
   ]);
 }());
@@ -59,7 +93,7 @@
   module.run([
     '$templateCache',
     function ($templateCache) {
-      $templateCache.put('appointments/profile.html', '<div class="" ng-app="appoints" ng-controller="ProfileCtrl"><div style="font-size: larger;padding-left: 5%" ng-if="isreadonly"><a class="dropdown-toggle" role="button" title="Go to Dashboard" id="patient{{$index}}" href="" ng-click="goToLandingPage()"><span class="glyphicon glyphicon-circle-arrow-left"></span>Go to dashboard</a></div><h2 ng-if="!dataLoading" style="text-align: center">Details of: <b>{{profileData.UserDetails.FirstName}} {{profileData.UserDetails.LastName}}</b></h2><form name="form" ng-submit="register()" ng-if="!dataLoading" role="form"><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%"><div class="form-group col-md-12" ng-class="{ \'has-error\': form.email.$dirty && (form.email.$error.required || form.email.$error.email) }"><label for="email">Email</label><input type="email" name="email" id="email" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.Email" required> <span ng-show="form.email.$dirty && form.email.$error.email" class="help-block">This email format is invalid!</span> <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">Email is required</span></div></div><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%"><div class="form-group col-md-6" ng-class="{ \'has-error\': form.firstName.$dirty && form.firstName.$error.required }"><label for="firstName">First name</label><input name="firstName" id="firstName" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.FirstName" required> <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">First name is required</span></div><div class="form-group col-md-6" ng-class="{ \'has-error\': form.lastName.$dirty && form.lastName.$error.required }"><label for="lastName">Last name</label><input name="lastName" id="lastName" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.LastName" required> <span ng-show="form.lastName.$dirty && form.lastName.$error.required" class="help-block">Last name is required</span></div></div><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%"><div class="form-group col-md-6"><label for="maritalStatus">Marital Status</label><input name="maritalStatus" id="maritalStatus" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.MaritalStatus"></div><div class="form-group col-md-6"><label for="gender">Gender</label><input name="gender" id="gender" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.Gender"></div></div><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%"><div class="form-group col-md-6"><label for="address">Address</label><input name="address" id="address" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.Address"></div><div class="form-group col-md-6"><label for="postalCode">Postal Code</label><input name="postalCode" id="postalCode" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.PostalCode"></div></div><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%"><div class="form-group col-md-6"><label for="city">City</label><input name="city" id="city" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.City"></div><div class="form-group col-md-6"><label for="province">Province</label><input name="province" id="province" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.Province"></div></div><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%"><div class="form-group col-md-6"><label for="country">Country</label><input name="country" id="country" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.Country"></div><div class="form-group col-md-6"><label for="contact">Contact</label><input type="number" name="contact" id="contact" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.Contact"></div></div><h2 style="text-align: center" ng-if="!profileData.UserDetails.IsAdmin && profileData.UserDetails.IsDoctor"><b>Doctor\'s Details</b></h2><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%" ng-if="!profileData.UserDetails.IsAdmin && profileData.UserDetails.IsDoctor"><div class="form-group col-md-6"><label for="availability">Availability</label><input name="availability" id="availability" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.Availability"></div><div class="form-group col-md-6"><label for="currentWorkingStatus">Current Working Status</label><input name="currentWorkingStatus" id="currentWorkingStatus" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.CurrentWorkingStatus"></div></div><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%" ng-if="!profileData.UserDetails.IsAdmin && profileData.UserDetails.IsDoctor"><div class="form-group col-md-6"><label for="department">Department</label><input name="department" id="department" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.Department"></div><div class="form-group col-md-6"><label for="fieldOfPractice">Field of Practice</label><input name="fieldOfPractice" id="fieldOfPractice" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.FieldOfPractice"></div></div><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%" ng-if="!profileData.UserDetails.IsAdmin && profileData.UserDetails.IsDoctor"><div class="form-group col-md-6"><label for="degree">Degree</label><input name="degree" id="degree" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.Degree"></div><div class="form-group col-md-6"><label for="graduatedFrom">Graduated From</label><input name="graduatedFrom" id="graduatedFrom" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.GraduatedFrom"></div></div><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%" ng-if="!profileData.UserDetails.IsAdmin && profileData.UserDetails.IsDoctor"><div class="form-group col-md-6"><label for="dateOfJoining">Date of Joining</label><input name="dateOfJoining" id="dateOfJoining" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.DOJ"></div><div class="form-group col-md-6"><label for="yearsOfExp">Years of Experience</label><input name="yearsOfExp" id="yearsOfExp" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.YearsOfExp"></div></div><h2 style="text-align: center" ng-if="!profileData.UserDetails.IsAdmin && !profileData.UserDetails.IsDoctor"><b>Patient\'s Details</b></h2><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%" ng-if="(!profileData.UserDetails.IsAdmin && !profileData.UserDetails.IsDoctor)"><div class="form-group col-md-6"><label for="allergies">Allergies</label><input name="allergies" id="allergies" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.Allergies"></div><div class="form-group col-md-6"><label for="healthIssues">Health Issues</label><input name="healthIssues" id="healthIssues" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.HealthIssues"></div></div><div class="form-group col-md-12" ng-if="!isreadonly" style="padding-left: 15%;padding-right: 15%"><div class="form-actions col-md-6"><button type="submit" ng-disabled="form.$invalid || dataLoading" class="btn btn-primary">Submit</button> <a href="#/usersignin" class="btn btn-link">Cancel</a></div></div></form></div>');
+      $templateCache.put('appointments/profile.html', '<div class="" ng-app="appoints" ng-controller="ProfileCtrl"><div style="font-size: larger;padding-left: 5%" ng-if="isreadonly"><a class="dropdown-toggle" role="button" title="Go to Dashboard" id="patient{{$index}}" href="" ng-click="goToLandingPage()"><span class="glyphicon glyphicon-circle-arrow-left"></span>Go to dashboard</a></div><h2 ng-if="!dataLoading" style="text-align: center">Details of: <b>{{profileData.UserDetails.FirstName}} {{profileData.UserDetails.LastName}}</b></h2><form name="form" ng-submit="register()" ng-if="!dataLoading" role="form"><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%"><div class="form-group col-md-12" ng-class="{ \'has-error\': form.email.$dirty && (form.email.$error.required || form.email.$error.email) }"><label for="email">Email</label><input type="email" name="email" id="email" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.Email" required> <span ng-show="form.email.$dirty && form.email.$error.email" class="help-block">This email format is invalid!</span> <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">Email is required</span></div></div><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%"><div class="form-group col-md-6" ng-class="{ \'has-error\': form.firstName.$dirty && form.firstName.$error.required }"><label for="firstName">First name</label><input name="firstName" id="firstName" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.FirstName" required> <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">First name is required</span></div><div class="form-group col-md-6" ng-class="{ \'has-error\': form.lastName.$dirty && form.lastName.$error.required }"><label for="lastName">Last name</label><input name="lastName" id="lastName" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.LastName" required> <span ng-show="form.lastName.$dirty && form.lastName.$error.required" class="help-block">Last name is required</span></div></div><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%"><div class="form-group col-md-6"><label for="maritalStatus">Marital Status</label><input name="maritalStatus" id="maritalStatus" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.MaritalStatus"></div><div class="form-group col-md-6"><label for="gender">Gender</label><input name="gender" id="gender" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.Gender"></div></div><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%"><div class="form-group col-md-6"><label for="address">Address</label><input name="address" id="address" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.Address"></div><div class="form-group col-md-6"><label for="postalCode">Postal Code</label><input name="postalCode" id="postalCode" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.PostalCode"></div></div><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%"><div class="form-group col-md-6"><label for="city">City</label><input name="city" id="city" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.City"></div><div class="form-group col-md-6"><label for="province">Province</label><input name="province" id="province" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.Province"></div></div><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%"><div class="form-group col-md-6"><label for="country">Country</label><input name="country" id="country" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.Country"></div><div class="form-group col-md-6"><label for="contact">Contact</label><input type="number" name="contact" id="contact" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.Contact"></div></div><h2 style="text-align: center" ng-if="!profileData.UserDetails.IsAdmin && profileData.UserDetails.IsDoctor"><b>Doctor\'s Details</b></h2><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%" ng-if="!profileData.UserDetails.IsAdmin && profileData.UserDetails.IsDoctor"><div class="form-group col-md-6"><label for="availability">Availability</label><input name="availability" id="availability" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.Availability"></div><div class="form-group col-md-6"><label for="currentWorkingStatus">Current Working Status</label><input name="currentWorkingStatus" id="currentWorkingStatus" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.CurrentWorkingStatus"></div></div><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%" ng-if="!profileData.UserDetails.IsAdmin && profileData.UserDetails.IsDoctor"><div class="form-group col-md-6"><label for="department">Department</label><input name="department" id="department" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.Department"></div><div class="form-group col-md-6"><label for="fieldOfPractice">Field of Practice</label><input name="fieldOfPractice" id="fieldOfPractice" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.FieldOfPractice"></div></div><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%" ng-if="!profileData.UserDetails.IsAdmin && profileData.UserDetails.IsDoctor"><div class="form-group col-md-6"><label for="degree">Degree</label><input name="degree" id="degree" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.Degree"></div><div class="form-group col-md-6"><label for="graduatedFrom">Graduated From</label><input name="graduatedFrom" id="graduatedFrom" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.GraduatedFrom"></div></div><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%" ng-if="!profileData.UserDetails.IsAdmin && profileData.UserDetails.IsDoctor"><div class="form-group col-md-6"><label for="dateOfJoining">Date of Joining</label><input name="dateOfJoining" id="dateOfJoining" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.DOJ"></div><div class="form-group col-md-6"><label for="yearsOfExp">Years of Experience</label><input name="yearsOfExp" id="yearsOfExp" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.YearsOfExp"></div></div><h2 style="text-align: center" ng-if="!profileData.UserDetails.IsAdmin && !profileData.UserDetails.IsDoctor"><b>Patient\'s Details</b></h2><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%" ng-if="(!profileData.UserDetails.IsAdmin && !profileData.UserDetails.IsDoctor)"><div class="form-group col-md-6"><label for="allergies">Allergies</label><input name="allergies" id="allergies" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.Allergies"></div><div class="form-group col-md-6"><label for="healthIssues">Health Issues</label><input name="healthIssues" id="healthIssues" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.HealthIssues"></div></div><div class="form-group col-md-12" ng-if="!isreadonly" style="padding-left: 15%;padding-right: 15%"><div class="form-actions col-md-6"><button type="submit" ng-disabled="form.$invalid || dataLoading" class="btn btn-primary">Submit</button> <a href="#/dashboard" class="btn btn-link">Cancel</a></div></div></form></div>');
     }
   ]);
 }());
@@ -86,19 +120,6 @@
     '$templateCache',
     function ($templateCache) {
       $templateCache.put('appointments/usersignup.html', '<div class="" ng-app="appoints"><h1 style="text-align: center;padding-bottom: 25px">Sign up your practice to <b>DOC Connect</b></h1><form name="form" ng-submit="vm.register()" role="form"><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%"><div class="form-group col-md-12" ng-class="{ \'has-error\': form.email.$dirty && (form.email.$error.required || form.email.$error.email) }"><label for="username">Email</label><span class="mandatoryField" style="color: red">*</span> <input type="email" name="email" id="email" class="form-control" ng-model="signupObj.email" required> <span ng-show="form.email.$dirty && form.email.$error.email" class="help-block">This email format is invalid!</span> <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">Email is required</span></div></div><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%"><div class="form-group col-md-6" ng-class="{ \'has-error\': form.firstName.$dirty && form.firstName.$error.required }"><label for="username">First name</label><span class="mandatoryField" style="color: red">*</span> <input name="firstName" id="firstName" class="form-control" ng-model="signupObj.firstName" required> <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">First name is required</span></div><div class="form-group col-md-6" ng-class="{ \'has-error\': form.lastName.$dirty && form.lastName.$error.required }"><label for="username">Last name</label><span class="mandatoryField" style="color: red">*</span> <input name="lastName" id="lastName" class="form-control" ng-model="signupObj.lastName" required> <span ng-show="form.lastName.$dirty && form.lastName.$error.required" class="help-block">Last name is required</span></div></div><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%"><div class="form-group col-md-6" ng-class="{ \'has-error\': form.username.$dirty && form.username.$error.required }"><label for="username">Username</label><span class="mandatoryField" style="color: red">*</span> <input name="username" id="username" class="form-control" ng-model="signupObj.username" required> <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span></div><div class="form-group col-md-6" ng-class="{ \'has-error\': form.password.$dirty && form.password.$error.required }"><label for="password">Password</label><span class="mandatoryField" style="color: red">*</span> <input type="password" name="password" id="password" class="form-control" ng-model="signupObj.password" required> <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span></div></div><div class="form-check col-md-12" style="padding-left: 15%;padding-right: 15%"><div class="form-group col-md-6"><label for="isPractitioner">I am a practitioner</label><input type="checkbox" name="isPractitioner" id="isPractitioner" ng-model="signupObj.isPractitioner"></div></div><div class="form-group col-md-12" ng-show="signupObj.isPractitioner" style="padding-left: 15%;padding-right: 15%"><div class="form-group col-md-6"><label for="specialty">Your specialty</label><input name="specialty" id="specialty" class="form-control" ng-model="signupObj.specialty"> <small class="form-text text-muted"><i>"Dentistry", "Chiropractics"</i>, etc.</small></div><div class="form-group col-md-6"><label for="credentials">Credentials</label><input name="credentials" id="credentials" class="form-control" ng-model="signupObj.credentials"> <small class="form-text text-muted"><i>MD, BDS, DPM</i>, etc.</small></div></div><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%"><div class="form-actions col-md-6"><button type="submit" ng-click="signup()" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Sign up</button> <a href="#/usersignin" class="btn btn-link">Cancel</a></div></div></form></div>');
-    }
-  ]);
-}());
-(function (module) {
-  try {
-    module = angular.module('appoints-client-templates');
-  } catch (e) {
-    module = angular.module('appoints-client-templates', []);
-  }
-  module.run([
-    '$templateCache',
-    function ($templateCache) {
-      $templateCache.put('auth/login.html', '<h2>Login</h2><p>Appoints doesn\'t store user credentials such as usernames and passwords. It\'s required to use one of the providers below.</p><p><a href="" ng-click="loginGoogle()">Login with Google</a></p>');
     }
   ]);
 }());
@@ -548,6 +569,7 @@ angular.module('appoints.createappointment', [
       };
       $scope.editAppointment = null;
     }
+    ;
     initAppointment();
     $scope.getEndTime = function (appointment) {
       return moment(appointment.dateAndTime).add(appointment.duration, 'minutes').format('H:mm');
@@ -661,86 +683,6 @@ angular.module('appoints.api', [
   function (halClient, config) {
     var apiRoot = halClient.$get(config.defaultApiEndpoint);
     return { apiRoot: apiRoot };
-  }
-]);
-angular.module('appoints.appointments', [
-  'ngRoute',
-  'appoints.api'
-]).controller('AppointmentsCtrl', [
-  '$scope',
-  '$window',
-  '_',
-  'appointsapi',
-  'flash',
-  'moment',
-  function AppointmentsController($scope, $window, _, appointsapi, flash, moment) {
-    function load() {
-      return appointsapi.apiRoot.then(function (rootResource) {
-        return rootResource.$get('appointments').then(function (appointmentsResource) {
-          return appointmentsResource.$get('appointment').then(function (appointments) {
-            // get embedded appointments
-            $scope.upcomingAppointments = _.filter(appointments, function (appointment) {
-              return moment(appointment.dateAndTime) > moment();
-            });
-            $scope.pastAppointments = _.filter(appointments, function (appointment) {
-              return moment(appointment.dateAndTime) <= moment();
-            });
-          });
-        }, function (err) {
-          flash.addError(err.data);
-        });
-      });
-    }
-    function initAppointment() {
-      $scope.newAppointment = {
-        title: '',
-        dateAndTime: moment().startOf('day').add(1, 'days').add(9, 'hours').toDate(),
-        duration: 30,
-        remarks: ''
-      };
-      $scope.editAppointment = null;
-    }
-    $scope.getEndTime = function (appointment) {
-      return moment(appointment.dateAndTime).add(appointment.duration, 'minutes').format('H:mm');
-    };
-    $scope.createAppointment = function () {
-      // Sync endDateAndTime first
-      $scope.newAppointment.endDateAndTime = moment($scope.newAppointment.dateAndTime).add($scope.newAppointment.duration, 'minutes');  // return rootResource.$post('appointments', null, $scope.newAppointment).then(function () {
-                                                                                                                                        //   flash.add('Appointment created successfully', 'info');
-                                                                                                                                        //   initAppointment();
-                                                                                                                                        // }, function (err) {
-                                                                                                                                        //   flash.addError(err.data);
-                                                                                                                                        // });
-    };
-    $scope.removeAppointment = function (appointmentResource) {
-      if ($window.confirm('Are you sure?')) {
-        return appointmentResource.$del('self').then(function (result) {
-          flash.add(result.message);
-        }, function (err) {
-          flash.addError(err.data);
-        }).then(load);
-      }
-    };
-    $scope.setAppointmentForEdit = function (appointment) {
-      $scope.editAppointment = angular.copy(appointment);
-    };
-    $scope.reschedule = function (newDateTime) {
-      if ($scope.editAppointment) {
-        $scope.editAppointment.dateAndTime = newDateTime;
-        $scope.editAppointment.endDateAndTime = moment($scope.editAppointment.dateAndTime).add($scope.editAppointment.duration, 'minutes').toDate();
-        var appointmentResource = _($scope.upcomingAppointments).find({ id: $scope.editAppointment.id });
-        return appointmentResource.$patch('self', null, {
-          dateAndTime: $scope.editAppointment.dateAndTime,
-          endDateAndTime: $scope.editAppointment.endDateAndTime
-        }).then(function () {
-          flash.add('Appointment is rescheduled');
-        }, function (err) {
-          flash.addError(err.data);
-        }).then(load);
-      }
-    };
-    initAppointment();
-    load();
   }
 ]);
 angular.module('appoints.signup', [
@@ -897,18 +839,22 @@ angular.module('appoints.dashboard', [
   'appoints.usersession'
 ]).controller('DashboardCtrl', [
   '$scope',
+  '$compile',
+  '$timeout',
+  'uiCalendarConfig',
   'config',
   'usersession',
   '$http',
   '$location',
   'flash',
-  function DashboardController($scope, config, usersession, $http, $location, flash) {
+  '_',
+  'moment',
+  function DashboardController($scope, $compile, $timeout, uiCalendarConfig, config, usersession, $http, $location, flash, _, moment) {
     $scope.user = usersession.current;
     $scope.getDoctors = function () {
-      var reqURL = config.apiEndpoint + '/doctors';
       var req = {
           method: 'GET',
-          url: reqURL
+          url: config.apiEndpoint + '/doctors'
         };
       return $http(req).then(function (result) {
         $scope.doctors = result.data;
@@ -917,10 +863,9 @@ angular.module('appoints.dashboard', [
       });
     };
     $scope.getPatients = function () {
-      var reqURL = config.apiEndpoint + '/patients';
       var req = {
           method: 'GET',
-          url: reqURL
+          url: config.apiEndpoint + '/patients'
         };
       return $http(req).then(function (result) {
         $scope.patients = result.data;
@@ -928,14 +873,146 @@ angular.module('appoints.dashboard', [
         flash.add(err.data.ExceptionMessage, 'error');
       });
     };
+    $scope.getAppointments = function () {
+      var req = {
+          method: 'GET',
+          url: config.apiEndpoint + '/appointments'
+        };
+      return $http(req).then(function (result) {
+        $scope.appointments = result.data;
+      }, function (err) {
+        flash.add(err.data.ExceptionMessage, 'error');
+      });
+    };
+    $scope.getDoctorAppointments = function () {
+      var req = {
+          method: 'GET',
+          url: config.apiEndpoint + '/doctors/' + usersession.current.userId + '/appointments'
+        };
+      return $http(req).then(function (appointments) {
+        $scope.eventSourceDoctor = _.filter(appointments.data, function (appointment) {
+          appointment.title = appointment.Title;
+          appointment.start = moment(appointment.DateAndTime);
+          appointment.end = moment(appointment.DateAndTime).add(appointment.Duration, 'minutes');
+          appointment.allDay = false;
+          $scope.addEventDoc(appointment);
+          return appointment;
+        });
+      }, function (err) {
+        flash.add(err.data.ExceptionMessage, 'error');
+      });
+    };
+    $scope.getPatientAppointments = function () {
+      var req = {
+          method: 'GET',
+          url: config.apiEndpoint + '/patients/' + usersession.current.userId + '/appointments'
+        };
+      return $http(req).then(function (appointments) {
+        $scope.eventSourcePatient = _.filter(appointments.data, function (appointment) {
+          appointment.title = appointment.Title;
+          appointment.start = moment(appointment.DateAndTime);
+          appointment.end = moment(appointment.DateAndTime).add(appointment.Duration, 'minutes');
+          appointment.allDay = false;
+          $scope.addEventPat(appointment);
+          return appointment;
+        });
+      }, function (err) {
+        flash.add(err.data.ExceptionMessage, 'error');
+      });
+    };
+    $scope.addEvent = function (appointment) {
+      $scope.calEventsExt.events.push(appointment);
+    };
+    $scope.addEventDoc = function (appointment) {
+      $scope.calEventsDoc.events.push(appointment);
+    };
+    $scope.addEventPat = function (appointment) {
+      $scope.calEventsPat.events.push(appointment);
+    };
+    $scope.calEventsExt = { events: [] };
+    $scope.calEventsDoc = { events: [] };
+    $scope.calEventsPat = { events: [] };
+    $scope.eventSources = [$scope.calEventsExt];
+    $scope.eventSourceDoctor = [$scope.calEventsDoc];
+    $scope.eventSourcePatient = [$scope.calEventsPat];
     $scope.openDoctorDetails = function (doctor) {
       $location.url('/profile/true/true/' + doctor.UserDetails.UserId);
     };
     $scope.openPatientDetails = function (patient) {
       $location.url('/profile/true/false/' + patient.UserDetails.UserId);
     };
+    $scope.openAppointmentDoctor = function (appointment) {
+      $location.url('/profile/true/true/' + appointment.DoctorUserId);
+    };
+    $scope.openAppointmentPatient = function (appointment) {
+      $location.url('/profile/true/false/' + appointment.PatientUserId);
+    };
     $scope.getDoctors();
     $scope.getPatients();
+    $scope.getAppointments();
+    $scope.getDoctorAppointments();
+    $scope.getPatientAppointments();
+    $scope.getAppointments = function () {
+      $scope.calEventsExt.events = [];
+      $scope.newAppointment.doctorId = 1;
+      var reqURL = config.apiEndpoint + '/doctors/' + $scope.newAppointment.doctorId + '/appointments';
+      var req = {
+          method: 'GET',
+          url: reqURL
+        };
+      return $http(req).then(function (appointments) {
+        $scope.eventSources3 = _.filter(appointments.data, function (appointment) {
+          appointment.title = appointment.Title;
+          appointment.start = moment(appointment.DateAndTime);
+          appointment.end = moment(appointment.DateAndTime).add(appointment.Duration, 'minutes');
+          appointment.allDay = false;
+          $scope.addEvent(appointment);
+          return appointment;
+        });
+      }, function (err) {
+        flash.add(err.data.ExceptionMessage, 'error');
+      });
+    };
+    /* alert on eventClick */
+    $scope.alertOnEventClick = function (date) {
+      $scope.alertMessage = date.title + ' was clicked ';
+    };
+    /* Change View */
+    $scope.changeView = function (view, calendar) {
+      uiCalendarConfig.calendars[calendar].fullCalendar('changeView', view);
+    };
+    /* Change View */
+    $scope.renderCalendar = function (calendar) {
+      $timeout(function () {
+        if (uiCalendarConfig.calendars[calendar]) {
+          uiCalendarConfig.calendars[calendar].fullCalendar('render');
+        }
+      });
+    };
+    /* Render Tooltip */
+    $scope.eventRender = function (event, element) {
+      element.attr({
+        'tooltip': event.title,
+        'tooltip-append-to-body': true
+      });
+      $compile(element)($scope);
+    };
+    /* config object */
+    $scope.uiConfig = {
+      calendar: {
+        height: 450,
+        editable: false,
+        header: {
+          left: 'title',
+          center: '',
+          right: 'today prev,next'
+        },
+        eventClick: $scope.alertOnEventClick,
+        eventDrop: $scope.alertOnDrop,
+        eventResize: $scope.alertOnResize,
+        eventRender: $scope.eventRender
+      }
+    };
   }
 ]);
 angular.module('appoints.logindetails', [
@@ -1101,33 +1178,6 @@ angular.module('appoints.authinterceptor', ['appoints.usersession']).factory('au
     $httpProvider.interceptors.push('authInterceptor');
   }
 ]);
-angular.module('appoints.login', [
-  'appoints.config',
-  'appoints.usersession',
-  'ngRoute'
-]).controller('LoginCtrl', [
-  '$scope',
-  '$rootScope',
-  '$window',
-  '$location',
-  'config',
-  'usersession',
-  function LoginController($scope, $rootScope, $window, $location, config, usersession) {
-    usersession.returnTo = $location.search().returnTo;  // $scope.loginGoogle = function () {
-                                                         //   return authWindow(config.defaultApiEndpoint + '/auth/google');
-                                                         // };
-                                                         // function authWindow(authUrl) {
-                                                         //   $rootScope.loginPopup = popupCenterWindow(authUrl, 'authenticate', 640, 500);
-                                                         //   return false;
-                                                         // }
-                                                         // function popupCenterWindow(url, title, w, h) {
-                                                         //   var left = (screen.width / 2) - (w / 2);
-                                                         //   var top = (screen.height / 2) - (h / 2);
-                                                         //   return $window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
-                                                         //   return true;
-                                                         // }
-  }
-]);
 angular.module('appoints', [
   'ngRoute',
   'ui.bootstrap.datetimepicker',
@@ -1136,7 +1186,6 @@ angular.module('appoints', [
   'appoints.usersession',
   'appoints.authinterceptor',
   'appoints.home',
-  'appoints.login',
   'appoints.signin',
   'appoints.logindetails',
   'appoints.signup',

@@ -15,7 +15,7 @@
               <p class="form-control-static">{{ newAppointment.dateAndTime | date:'d MMM, y H:mm' }}</p>
             </div>
           </a>
-          <ul class="" role="menu" aria-labelledby="dLabel">
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
             <datetimepicker ng-model="newAppointment.dateAndTime" data-on-set-time="onTimeSet(newDate, oldDate)"
               datetimepicker-config="{ dropdownSelector: '#dropdown2', startView: 'hour', minuteStep: 15 }" />
           </ul>
