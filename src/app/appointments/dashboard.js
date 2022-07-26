@@ -109,22 +109,8 @@ angular.module('appoints.dashboard', [
                 url: config.apiEndpoint + "/appointments/" + appointment.AppointmentId
             };
             return $http(req)
-                .then(function (appointments) {
-                    // $scope.upcomingAppointments = _.filter(appointments.data, function (appointment) {
-                    //     appointment.title = appointment.Title;
-                    //     appointment.start = moment(appointment.DateAndTime);
-                    //     appointment.end = moment(appointment.DateAndTime).add(appointment.Duration, 'minutes');
-                    //     appointment.allDay = false;
-                    //     return moment(appointment.DateAndTime) > moment();
-                    // });
-                    // $scope.pastAppointments = _.filter(appointments.data, function (appointment) {
-                    //     appointment.title = appointment.Title;
-                    //     appointment.start = moment(appointment.DateAndTime);
-                    //     appointment.end = moment(appointment.DateAndTime).add(appointment.Duration, 'minutes');
-                    //     appointment.allDay = false;
-                    //     $scope.addEventPat(appointment);
-                    //     return moment(appointment.DateAndTime) <= moment();
-                    // });
+                .then(function () {
+                    
                 }, function (err) {
                     flash.add(err.data.ExceptionMessage, 'error');
                 });
@@ -191,10 +177,6 @@ angular.module('appoints.dashboard', [
             $scope.getPatientAppointments();
         }
 
-
-
-
-
         /* eventClick */
         $scope.eventClick = function (appointment) {
             if (moment(appointment.DateAndTime) <= moment()) {
@@ -203,7 +185,6 @@ angular.module('appoints.dashboard', [
             else {
                 $location.url('/appointment/false/' + appointment.AppointmentId);
             }
-            // $scope.alertMessage = (date.title + ' was clicked ');
         };
 
         /* Change View */

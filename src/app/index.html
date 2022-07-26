@@ -28,21 +28,22 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a href="#/dashboard"><img src="assets/images/DocConnect1.png" style="height: 50px;"></a>
+        <a href="" ng-click="goToDashboard()"><img src="assets/images/DocConnect1.png" style="height: 50px;"></a>
         <!-- <a href="#/" class="navbar-brand">DOC Connect</a> -->
       </div>
       <nav class="collapse navbar-collapse" role="navigation">
         <ul class="nav navbar-nav">
           <li ng-class="{active: routeIs('/dashboard')}" ng-show='user.isAuthenticated'><a href="#/dashboard"
-              translate>Dashboard</a></li>
+              style="color: #080808;" translate>Dashboard</a></li>
+        </ul>
+        <ul class="nav navbar-nav">
           <li ng-class="{active: routeIs('/createappointment')}"
             ng-show='user.isAuthenticated && !user.isAdmin && !user.isDoctor'><a href="#/createappointment"
-              translate>Create Appointment</a></li>
+              style="color: #080808;" translate>Create Appointment</a></li>
         </ul>
         <ul class="nav navbar-right" ng-show="!user.isAuthenticated">
           <li ng-class="{ active: routeIs('/usersignin') }">
             <a href="#/usersignin" style=" color: #080808; font-style: normal; font-size: x-large;">Login</a>
-            <!-- <a href="#/login"><img src="assets/images/login.png"></a> -->
           </li>
         </ul>
         <ul class="nav navbar-right" ng-show="!user.isAuthenticated">

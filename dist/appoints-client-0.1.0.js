@@ -133,7 +133,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('appointments/usersignin.html',
-    '<div ng-app="appoints" class="col-md-6 col-md-offset-3"><h1 style="text-align: center;padding-bottom: 25px"><b>Login</b></h1><form name="form" ng-submit="vm.login()" role="form"><div class="form-group" ng-class="{ \'has-error\': form.username.$dirty && form.username.$error.required }"><label for="username">Username</label><span class="mandatoryField" style="color: red">*</span> <input name="username" id="username" class="form-control" ng-model="username" required> <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span></div><div class="form-group" ng-class="{ \'has-error\': form.password.$dirty && form.password.$error.required }"><label for="password">Password</label><span class="mandatoryField" style="color: red">*</span> <input type="password" name="password" id="password" class="form-control" ng-model="password" required> <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span></div><div class="form-actions"><button type="submit" ng-click="login()" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Login</button> <a href="#/usersignup" class="btn btn-link">Signup</a></div></form></div>');
+    '<div ng-app="appoints" class="col-md-6 col-md-offset-3"><h1 style="text-align: center;padding-bottom: 25px">Login to <b>DOC Connect</b></h1><form name="form" ng-submit="vm.login()" role="form"><div class="form-group" ng-class="{ \'has-error\': form.username.$dirty && form.username.$error.required }"><label for="username">Username</label><span class="mandatoryField" style="color: red">*</span> <input name="username" id="username" class="form-control" ng-model="username" required> <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span></div><div class="form-group" ng-class="{ \'has-error\': form.password.$dirty && form.password.$error.required }"><label for="password">Password</label><span class="mandatoryField" style="color: red">*</span> <input type="password" name="password" id="password" class="form-control" ng-model="password" required> <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span></div><div class="form-actions"><button type="submit" ng-click="login()" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Login</button> <a href="#/usersignup" class="btn btn-link">Signup</a></div></form></div>');
 }]);
 })();
 
@@ -1113,10 +1113,6 @@ angular.module('appoints.dashboard', [
             $scope.getPatientAppointments();
         }
 
-
-
-
-
         /* eventClick */
         $scope.eventClick = function (appointment) {
             if (moment(appointment.DateAndTime) <= moment()) {
@@ -1408,6 +1404,12 @@ angular.module('appoints', [
     $scope.logout = function () {
       usersession.logout();
       $location.url('/');
+    };
+
+    $scope.goToDashboard = function () {
+      if ($scope.user.isAuthenticated) {
+        $location.url('/dashboard');
+      }
     };
 
     $scope.$on('event:loggedin', function (ev, currentSession) {

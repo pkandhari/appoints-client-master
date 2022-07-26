@@ -93,6 +93,12 @@ angular.module('appoints', [
       $location.url('/');
     };
 
+    $scope.goToDashboard = function () {
+      if ($scope.user.isAuthenticated) {
+        $location.url('/dashboard');
+      }
+    };
+
     $scope.$on('event:loggedin', function (ev, currentSession) {
       $scope.user = currentSession;
       usersession.current = currentSession;
