@@ -1,6 +1,5 @@
 angular.module('appoints.signup', [
-    'ngRoute',
-    'appoints.api'
+    'ngRoute'
 ])
 
     .controller('UserSignupCtrl', function UserSignupController($scope, usersession, $location) {

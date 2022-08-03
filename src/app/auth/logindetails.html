@@ -5,7 +5,7 @@
             <label for="oldPassword">Old Password</label>
             <span class="mandatoryField" style="color: red;">*</span>
             <input type="password" name="oldPassword" id="oldPassword" class="form-control" ng-model="oldPassword"
-                required />
+                placeholder="Old Password" required />
             <span ng-show="form.oldPassword.$dirty && form.oldPassword.$error.required" class="help-block">Old password
                 is required</span>
         </div>
@@ -13,7 +13,7 @@
             <label for="newPassword">New Password</label>
             <span class="mandatoryField" style="color: red;">*</span>
             <input type="password" name="newPassword" id="newPassword" class="form-control" ng-model="newPassword"
-                required />
+                placeholder="New Password" required />
             <span ng-show="form.newPassword.$dirty && form.newPassword.$error.required" class="help-block">New password
                 is required</span>
         </div>

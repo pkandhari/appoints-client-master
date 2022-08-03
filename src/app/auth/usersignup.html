@@ -1,12 +1,13 @@
 <div class="" ng-app="appoints">
-    <h1 style="text-align: center;padding-bottom: 25px;">Sign up your practice to <b>DOC Connect</b></h1>
+    <h1 style="text-align: center;padding-bottom: 25px;">Sign Up your practice to <b>DOC Connect</b></h1>
     <form name="form" ng-submit="vm.register()" role="form">
         <div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%;">
             <div class="form-group col-md-12"
                 ng-class="{ 'has-error': form.email.$dirty && (form.email.$error.required || form.email.$error.email) }">
                 <label for="username">Email</label>
                 <span class="mandatoryField" style="color: red;">*</span>
-                <input type="email" name="email" id="email" class="form-control" ng-model="signupObj.email" required />
+                <input type="email" name="email" id="email" class="form-control" ng-model="signupObj.email"
+                    placeholder="Email" required />
                 <span ng-show="form.email.$dirty && form.email.$error.email" class="help-block">This email format is
                     invalid!</span>
                 <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">Email is
@@ -18,7 +19,8 @@
                 ng-class="{ 'has-error': form.firstName.$dirty && form.firstName.$error.required }">
                 <label for="username">First name</label>
                 <span class="mandatoryField" style="color: red;">*</span>
-                <input type="text" name="firstName" id="firstName" class="form-control" ng-model="signupObj.firstName" required />
+                <input type="text" name="firstName" id="firstName" class="form-control" ng-model="signupObj.firstName"
+                    placeholder="First name" required />
                 <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">First name is
                     required</span>
             </div>
@@ -26,7 +28,8 @@
                 ng-class="{ 'has-error': form.lastName.$dirty && form.lastName.$error.required }">
                 <label for="username">Last name</label>
                 <span class="mandatoryField" style="color: red;">*</span>
-                <input type="text" name="lastName" id="lastName" class="form-control" ng-model="signupObj.lastName" required />
+                <input type="text" name="lastName" id="lastName" class="form-control" ng-model="signupObj.lastName"
+                    placeholder="Last name" required />
                 <span ng-show="form.lastName.$dirty && form.lastName.$error.required" class="help-block">Last name is
                     required</span>
             </div>
@@ -36,7 +39,8 @@
                 ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
                 <label for="username">Username</label>
                 <span class="mandatoryField" style="color: red;">*</span>
-                <input type="text" name="username" id="username" class="form-control" ng-model="signupObj.username" required />
+                <input type="text" name="username" id="username" class="form-control" ng-model="signupObj.username"
+                    placeholder="Username" required />
                 <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is
                     required</span>
             </div>
@@ -45,7 +49,7 @@
                 <label for="password">Password</label>
                 <span class="mandatoryField" style="color: red;">*</span>
                 <input type="password" name="password" id="password" class="form-control" ng-model="signupObj.password"
-                    required />
+                    placeholder="Password" required />
                 <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is
                     required</span>
             </div>
@@ -57,23 +61,26 @@
             </div>
         </div>
 
-        <div class="form-group col-md-12" ng-show="signupObj.isPractitioner" style="padding-left: 15%;padding-right: 15%;">
+        <div class="form-group col-md-12" ng-show="signupObj.isPractitioner"
+            style="padding-left: 15%;padding-right: 15%;">
             <div class="form-group col-md-6">
                 <label for="specialty">Your specialty</label>
-                <input type="text" name="specialty" id="specialty" class="form-control" ng-model="signupObj.specialty" />
+                <input type="text" name="specialty" id="specialty" class="form-control" ng-model="signupObj.specialty"
+                    placeholder="Your specialty" />
                 <small class="form-text text-muted"><i>"Dentistry", "Chiropractics"</i>, etc.</small>
             </div>
             <div class="form-group col-md-6">
                 <label for="credentials">Credentials</label>
-                <input type="text" name="credentials" id="credentials" class="form-control" ng-model="signupObj.credentials" />
+                <input type="text" name="credentials" id="credentials" class="form-control"
+                    ng-model="signupObj.credentials" placeholder="Credentials" />
                 <small class="form-text text-muted"><i>MD, BDS, DPM</i>, etc.</small>
             </div>
         </div>
 
         <div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%;">
             <div class="form-actions col-md-6">
-                <button type="submit" ng-click="signup()" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Sign
-                    up</button>
+                <button type="submit" ng-click="signup()" ng-disabled="form.$invalid || vm.dataLoading"
+                    class="btn btn-primary">Sign Up</button>
                 <a href="#/usersignin" class="btn btn-link">Cancel</a>
             </div>
         </div>

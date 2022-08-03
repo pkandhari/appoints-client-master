@@ -27,7 +27,6 @@ module.exports = function ( karma ) {
       'src/app/shared/directives.js',
       'src/app/shared/flash.js',
       'src/app/home/home.js',
-      'src/app/shared/appointsapi.js',
       'src/app/appointments/appointments.js',
       'src/app/auth/usersession.js',
       'src/app/auth/authinterceptor.js',

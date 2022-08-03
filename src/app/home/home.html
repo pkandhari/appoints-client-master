@@ -1,26 +1,53 @@
-
-<div class="row">
-  <div class="col-md-6" style="padding-top: 20px;font-family: cursive;font-size: 50px;">A Good and healthy body is the
-    reason behind a healthy mind.</div>
-  <div class="col-md-6">
-    <img src="assets/images/image1.png">
+<div class="row" style="padding-top: 20px;">
+  <div class="col-md-12"
+    style="font-family: cursive;font-size: 30px;text-align: center;padding-bottom: 20px;text-decoration-line: underline;">
+    A Good and healthy body is the reason behind a healthy mind.</div>
+  <div class="col-md-3" style="border-right: 1px solid white;">
+    <img src="assets/images/image2.png" style="height: 310px;width: 260px;">
   </div>
-</div>
-<div class="row">
-
-  <!-- <div class="col-md-8">
-    <h3>Where to go next?</h3>
-    <ul>
-      <li><a href="#/appointments">Schedule some appointments</a></li>
-      <li><a href="#/usersignup">User Signup</a></li>
-      <li><a href="#/usersignin">User Signin</a></li>
-      <li><a href="#/profile">Profile</a></li>
-      <li><a href="#/login">User Login</a></li>
-      <li><a href="https://github.com/martijnboland/appoints-api-node">Go to the appoints-api GitHub project (and
-          perhaps write a client for it?)</a></li>
-      <li><a href="https://github.com/martijnboland/appoints-client">Go to the appoints-client GitHub project (this
-          application)</a></li>
-    </ul>
-  </div> -->
+  <div class="col-md-4">
+    <h2 style="text-align: center;padding-bottom: 10px;">Sign in to manage my account.</h2>
+    <div class="col-md-12">
+      <form name="form" ng-submit="vm.login()" role="form">
+        <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+          <label for="username">Username</label>
+          <span class="mandatoryField" style="color: red;">*</span>
+          <input type="text" name="username" id="username" class="form-control" ng-model="username"
+            placeholder="Username" required />
+          <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is
+            required</span>
+        </div>
+        <label for="password">Password</label>
+        <span class="mandatoryField" style="color: red;">*</span>
+        <div class="form-group input-group"
+          ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
+          <input type="{{ showPassword ? 'text' : 'password' }}" name="password" id="password" class="form-control"
+            ng-model="password" placeholder="Password" required>
+          <span class="input-group-addon" ng-click="toggleShowPassword()"
+            ng-class="{'glyphicon glyphicon-eye-close form-control-feedback': showPassword,'glyphicon glyphicon-eye-open form-control-feedback': !showPassword}"
+            style="cursor: pointer; pointer-events: all;">
+          </span>
+        </div>
+        <div ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
+          <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is
+            required</span>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="block" ng-click="login()" ng-disabled="form.$invalid || vm.dataLoading"
+            class="btn btn-primary">Sign In</button>
+          <!-- <a href="#/usersignup" class="btn btn-link">Signup</a> -->
+        </div>
+        <div>
+          <!-- Register Now link -->
+          <strong>
+            <p>Don't have an account? <a href="#/usersignup" class="btn btn-link">Register Now</a></p>
+          </strong>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="col-md-5" style="border-left: 1px solid white;">
+    <img src="assets/images/image3.png" style="height: 310px;width: 470px;">
+  </div>
 </div>
 <footer class="pull-right">DOC Connect {{version}} - &copy; Pritpal Singh Kandhari, 2022</footer>

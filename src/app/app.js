@@ -42,17 +42,17 @@ angular.module('appoints', [
         title: 'Appointment'
       })
       .when('/usersignin', {
-        templateUrl: 'appointments/usersignin.html',
+        templateUrl: 'auth/usersignin.html',
         controller: 'UserSigninCtrl',
         title: 'UserSignin'
       })
       .when('/usersignup', {
-        templateUrl: 'appointments/usersignup.html',
+        templateUrl: 'auth/usersignup.html',
         controller: 'UserSignupCtrl',
         title: 'UserSignup'
       })
       .when('/logindetails', {
-        templateUrl: 'appointments/logindetails.html',
+        templateUrl: 'auth/logindetails.html',
         controller: 'LoginDetailsCtrl',
         title: 'LoginDetails'
       })
@@ -101,6 +101,9 @@ angular.module('appoints', [
     $scope.goToDashboard = function () {
       if ($scope.user.isAuthenticated) {
         $location.url('/dashboard');
+      }
+      else {
+        $location.url('/');
       }
     };
 

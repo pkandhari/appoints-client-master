@@ -16,10 +16,22 @@
   <link rel="stylesheet" href="/css/app.css">
   <!-- endinject -->
   <link href='//fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+  <style>
+    .block {
+      display: block;
+      width: 100%;
+      border: none;
+      background-color: #428bca;
+      padding: 14px 28px;
+      font-size: 16px;
+      cursor: pointer;
+      text-align: center;
+    }
+  </style>
 </head>
 
-<body>
-  <header class="navbar navbar-default navbar-static-top" style="background-color: #10c6f1 !important;">
+<body style="background-color : #8080808f">
+  <header class="navbar navbar-default navbar-static-top" style="background-color: #f7f7f7 !important;">
     <div class="container">
       <div class="navbar-header">
         <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
@@ -43,12 +55,12 @@
         </ul>
         <ul class="nav navbar-right" ng-show="!user.isAuthenticated">
           <li ng-class="{ active: routeIs('/usersignin') }">
-            <a href="#/usersignin" style=" color: #080808; font-style: normal; font-size: x-large;">Login</a>
+            <a href="#/usersignin" style=" color: #080808; font-style: normal; font-size: x-large;">Sign In</a>
           </li>
         </ul>
         <ul class="nav navbar-right" ng-show="!user.isAuthenticated">
           <li ng-class="{ active: routeIs('/usersignup') }">
-            <a href="#/usersignup" style="color: #080808; font-style: normal; font-size: x-large;">Sign up</a>
+            <a href="#/usersignup" style="color: #080808; font-style: normal; font-size: x-large;">Sign Up</a>
           </li>
         </ul>
         <ul class="nav navbar-nav navbar-right" ng-show="user.isAuthenticated">
@@ -67,6 +79,7 @@
     </div>
   </header>
   <div class="container" ap-hide-flash>
+    <!-- <div back-img="assets/images/image1.png" ></div> -->
     <ng-include src="'shared/flash.html'"></ng-include>
     <ng-view></ng-view>
   </div>
@@ -88,6 +101,7 @@
   <script src="/angular-crypto.js"></script>
   <script src="/appointments/appointment.js"></script>
   <script src="/appoints-client-templates.js"></script>
+  <script src="/auth/usersignup.js"></script>
   <script src="/calendar.js"></script>
   <script src="/config.js"></script>
   <script src="/shared/directives.js"></script>
@@ -95,12 +109,10 @@
   <script src="/appointments/CreateAppointment.js"></script>
   <script src="/auth/usersession.js"></script>
   <script src="/home/home.js"></script>
-  <script src="/shared/appointsapi.js"></script>
   <script src="/appointments/dashboard.js"></script>
-  <script src="/appointments/logindetails.js"></script>
   <script src="/appointments/profile.js"></script>
-  <script src="/appointments/usersignin.js"></script>
-  <script src="/appointments/usersignup.js"></script>
+  <script src="/auth/logindetails.js"></script>
+  <script src="/auth/usersignin.js"></script>
   <script src="/app.js"></script>
   <!-- endinject -->
 </body>
