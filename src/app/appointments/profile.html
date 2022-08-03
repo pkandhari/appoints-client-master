@@ -3,10 +3,10 @@
         <a class="dropdown-toggle" role="button" title="Go to Dashboard" id="patient{{$index}}" href=""
             ng-click="goToDashboard()"><span class="glyphicon glyphicon-circle-arrow-left"></span>Go to dashboard</a>
     </div>
-    <h2 ng-if="!dataLoading" style="text-align: center;">Details of:
+    <h2 style="text-align: center;">Details of:
         <b>{{profileData.UserDetails.FirstName}} {{profileData.UserDetails.LastName}}</b>
     </h2>
-    <form name="form" ng-submit="register()" ng-if="!dataLoading" role="form">
+    <form name="form" ng-submit="register()" role="form">
         <div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%;">
             <div class="form-group col-md-12"
                 ng-class="{ 'has-error': form.email.$dirty && (form.email.$error.required || form.email.$error.email) }">
@@ -47,7 +47,7 @@
                     ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.MaritalStatus" /> -->
                 <select class="form-control" id="maritalStatus"
                     ng-options="maritalStatus as maritalStatus.Description for maritalStatus in maritalStatusData track by maritalStatus.Id"
-                    ng-model="maritalStatus" ng-readonly="{{isreadonly}}" required>
+                    ng-model="maritalStatus" ng-readonly="{{isreadonly}}">
                     <option value="" disabled selected>Select your option</option>
                 </select>
             </div>
@@ -57,7 +57,7 @@
                     ng-model="profileData.UserDetails.Gender" /> -->
                 <select class="form-control" id="gender"
                     ng-options="gender as gender.Description for gender in gendersData track by gender.Id"
-                    ng-model="gender" ng-readonly="{{isreadonly}}" required>
+                    ng-model="gender" ng-readonly="{{isreadonly}}">
                     <option value="" disabled selected>Select your option</option>
                 </select>
             </div>
@@ -178,7 +178,7 @@
 
         <div class="form-group col-md-12" ng-if="!isreadonly" style="padding-left: 15%;padding-right: 15%;">
             <div class="form-actions col-md-6">
-                <button type="submit" ng-click="saveProfileData()" ng-disabled="form.$invalid || dataLoading"
+                <button type="submit" ng-click="saveProfileData()" ng-disabled="form.$invalid"
                     class="btn btn-primary">Submit</button>
                 <a href="#/dashboard" class="btn btn-link">Cancel</a>
             </div>

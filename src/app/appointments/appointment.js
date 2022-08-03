@@ -6,6 +6,9 @@ angular.module('appoints.appointment', [
     $scope.doctor = {};
     $scope.isreadonly = $routeParams.isreadonly === 'true';
 
+    $('#doctor').attr("disabled", $scope.isreadonly);
+    $('#duration').attr("disabled", $scope.isreadonly);
+
     $scope.getEndTime = function (appointment) {
       return moment(appointment.dateAndTime).add(appointment.duration, 'minutes').format('H:mm');
     };

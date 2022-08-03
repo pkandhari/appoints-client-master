@@ -6,9 +6,11 @@ angular.module('appoints.profile', [
     .controller('ProfileCtrl', function ProfileController($scope, moment, config, usersession, $http, $location, flash, $routeParams) {
         // var profileVM = this;
         $scope.isreadonly = $routeParams.isreadonly === 'true';
-        $scope.dataLoading = true;
         $scope.maritalStatus = { Id: 0, Description: '' };
         $scope.gender = { Id: 0, Description: '' };
+
+        $('#maritalStatus').attr("disabled", true);
+        $('#gender').attr("disabled", true);
 
         $scope.getProfileData = function () {
             var reqURL = config.apiEndpoint;
@@ -39,11 +41,10 @@ angular.module('appoints.profile', [
             };
             return $http(req)
                 .then(function (result) {
-                    $scope.dataLoading = false;
                     $scope.profileData = result.data;
                     $scope.maritalStatus.Id = $scope.profileData.UserDetails.MaritalStatus;
                     $scope.gender.Id = $scope.profileData.UserDetails.Gender;
-                    if($scope.profileData.DOJ){
+                    if ($scope.profileData.DOJ) {
                         $scope.profileData.DOJ = moment($scope.profileData.DOJ).toDate();
                     }
                 }, function (err) {

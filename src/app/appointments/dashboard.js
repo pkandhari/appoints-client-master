@@ -110,7 +110,7 @@ angular.module('appoints.dashboard', [
             };
             return $http(req)
                 .then(function () {
-                    
+
                 }, function (err) {
                     flash.add(err.data.ExceptionMessage, 'error');
                 });

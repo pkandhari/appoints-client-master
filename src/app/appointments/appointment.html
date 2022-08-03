@@ -26,7 +26,8 @@
                 <label for="dateAndTime">Appointment date and time</label>
                 <span class="mandatoryField" style="color: red;">*</span>
                 <div class="dropdown">
-                    <a class="dropdown-toggle" id="dropdown1" role="button" data-toggle="dropdown">
+                    <a class="dropdown-toggle" ng-class="{{isreadonly}} ? 'disable-anchor' : ''" id="dropdown1"
+                        role="button" data-toggle="dropdown">
                         <div class="input-group">
                             <input type="text" required data-date-time-input="MM/DD/YYYY HH:mm:ss" class="form-control"
                                 data-ng-model="editAppointment.DateAndTime" ng-readonly="{{isreadonly}}" required>
