@@ -149,13 +149,8 @@
             ng-if="!profileData.UserDetails.IsAdmin && profileData.UserDetails.IsDoctor">
             <div class="form-group col-md-6">
                 <label for="dateOfJoining">Date of Joining</label>
-                <!-- <input type="date" name="dateOfJoining" id="dateOfJoining" class="form-control"
-                    ng-readonly="{{isreadonly}}" ng-model="profileData.dateOfJoining" placeholder="yyyy-MM-dd" /> -->
-                <md-datepicker ng-model="ctrl.myDate" md-placeholder="Enter date"
-                    input-aria-describedby="datepicker-description" input-aria-labelledby="datepicker-header ">
-                </md-datepicker>
-                <!-- <input type="date" id="exampleInput" name="input" ng-model="example.value" placeholder="yyyy-MM-dd"
-                    min="2013-01-01" max="2013-12-31" required /> -->
+                <input type="date" name="dateOfJoining" id="dateOfJoining" class="form-control"
+                    ng-readonly="{{isreadonly}}" ng-model="profileData.DOJ" placeholder="yyyy-MM-dd" />
             </div>
             <div class="form-group col-md-6">
                 <label for="yearsOfExp">Years of Experience</label>

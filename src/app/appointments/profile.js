@@ -43,8 +43,8 @@ angular.module('appoints.profile', [
                     $scope.profileData = result.data;
                     $scope.maritalStatus.Id = $scope.profileData.UserDetails.MaritalStatus;
                     $scope.gender.Id = $scope.profileData.UserDetails.Gender;
-                    if($scope.profileData.dateOfJoining){
-                        $scope.profileData.dateOfJoining = moment($scope.profileData.DOJ);
+                    if($scope.profileData.DOJ){
+                        $scope.profileData.DOJ = moment($scope.profileData.DOJ).toDate();
                     }
                 }, function (err) {
                     flash.add(err.data.ExceptionMessage, 'error');
