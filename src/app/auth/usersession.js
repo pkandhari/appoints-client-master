@@ -1,9 +1,10 @@
 angular.module('appoints.usersession', [
   'appoints.flash',
-  'appoints.config'
+  'appoints.config',
+  'mdo-angular-cryptography'
 ])
 
-  .factory('usersession', function ($rootScope, $window, config, flash, $http, Base64) {
+  .factory('usersession', function ($rootScope, $window, config, flash, $http, Base64, $crypto) {
 
     var defaultSession = {
       userId: '',
@@ -37,7 +38,7 @@ angular.module('appoints.usersession', [
             currentSession.isDoctor = userResource.IsDoctor;
             currentSession.authdata = Base64.encode(loginObj.username + ':' + loginObj.password);
             $http.defaults.headers.common['Authorization'] = 'Basic ' + currentSession.authdata;
-            $window.localStorage.setItem('access_token', JSON.stringify(currentSession));
+            $window.localStorage.setItem('access_token', $crypto.encrypt(JSON.stringify(currentSession)));
             $rootScope.$broadcast('event:loggedin', currentSession);
           }
         }, function (err) {
@@ -91,12 +92,12 @@ angular.module('appoints.usersession', [
     };
   })
 
-  .run(function ($window, $rootScope, usersession, $http) {
+  .run(function ($window, $rootScope, usersession, $http, $crypto) {
     // Automatically try to login the user when starting up this module
     if ($window.localStorage.getItem('access_token') !== null) {
-      var userResource = JSON.parse($window.localStorage.getItem('access_token'));
+      var userResource = JSON.parse($crypto.decrypt($window.localStorage.getItem('access_token')));
       if (userResource.userId > 0) {
-        usersession.current= userResource;
+        usersession.current = userResource;
         $http.defaults.headers.common['Authorization'] = 'Basic ' + userResource.authdata;
         $rootScope.$broadcast('event:loggedin', usersession.current);
       }

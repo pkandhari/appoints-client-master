@@ -12,7 +12,8 @@ angular.module('appoints', [
   'appoints.profile',
   'appoints.createappointment',
   'appoints.appointment',
-  'appoints-client-templates'
+  'appoints-client-templates',
+  'mdo-angular-cryptography'
 ])
 
   // allow DI for use in controllers, unit tests
@@ -22,6 +23,10 @@ angular.module('appoints', [
   .config(function ($httpProvider) {
     $httpProvider.defaults.useXDomain = true;
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
+  })
+
+  .config(function ($cryptoProvider) {
+    $cryptoProvider.setCryptographyKey('123456');
   })
 
   .config(function config($routeProvider) {
