@@ -7,6 +7,8 @@ angular.module('appoints.profile', [
         // var profileVM = this;
         $scope.isreadonly = $routeParams.isreadonly === 'true';
         $scope.dataLoading = true;
+        $scope.maritalStatus = { Id: 0, Description: '' };
+        $scope.gender = { Id: 0, Description: '' };
 
         $scope.getProfileData = function () {
             var reqURL = config.apiEndpoint;
@@ -39,6 +41,64 @@ angular.module('appoints.profile', [
                 .then(function (result) {
                     $scope.dataLoading = false;
                     $scope.profileData = result.data;
+                    $scope.maritalStatus.Id = $scope.profileData.UserDetails.MaritalStatus;
+                    $scope.gender.Id = $scope.profileData.UserDetails.Gender;
+                }, function (err) {
+                    flash.add(err.data.ExceptionMessage, 'error');
+                });
+        };
+
+        $scope.saveProfileData = function () {
+            var reqURL = config.apiEndpoint;
+
+            if (usersession.current.isAdmin) {
+                reqURL = reqURL + "/admins";
+            }
+            else if (usersession.current.isDoctor) {
+                reqURL = reqURL + "/doctors";
+            }
+            else {
+                reqURL = reqURL + "/patients";
+            }
+
+            $scope.profileData.UserDetails.MaritalStatus = $scope.maritalStatus.Id;
+            $scope.profileData.UserDetails.Gender = $scope.gender.Id;
+
+            var req = {
+                method: "PUT",
+                url: reqURL,
+                data: $scope.profileData
+            };
+            return $http(req)
+                .then(function () {
+                    flash.add('Profile saved successfully', 'info');
+                    $location.url('/dashboard');
+                }, function (err) {
+                    flash.add(err.data.ExceptionMessage, 'error');
+                });
+        };
+
+        $scope.getGenderData = function () {
+            var req = {
+                method: "GET",
+                url: config.apiEndpoint + '/genders'
+            };
+            return $http(req)
+                .then(function (result) {
+                    $scope.gendersData = result.data;
+                }, function (err) {
+                    flash.add(err.data.ExceptionMessage, 'error');
+                });
+        };
+
+        $scope.getMaritalStatusData = function () {
+            var req = {
+                method: "GET",
+                url: config.apiEndpoint + '/maritalstatus'
+            };
+            return $http(req)
+                .then(function (result) {
+                    $scope.maritalStatusData = result.data;
                 }, function (err) {
                     flash.add(err.data.ExceptionMessage, 'error');
                 });
@@ -49,8 +109,7 @@ angular.module('appoints.profile', [
         };
 
         $scope.getProfileData();
-        // $timeout(function () {
-        //     $scope.getProfileData(); // this is the called function
-        //   }, 3000);
+        $scope.getGenderData();
+        $scope.getMaritalStatusData();
     });
 

@@ -121,7 +121,7 @@ angular.module('appoints.appointment', ['ngRoute']).controller('AppointmentCtrl'
   module.run([
     '$templateCache',
     function ($templateCache) {
-      $templateCache.put('appointments/profile.html', '<div class="" ng-app="appoints" ng-controller="ProfileCtrl"><div style="font-size: larger;padding-left: 5%" ng-if="isreadonly"><a class="dropdown-toggle" role="button" title="Go to Dashboard" id="patient{{$index}}" href="" ng-click="goToDashboard()"><span class="glyphicon glyphicon-circle-arrow-left"></span>Go to dashboard</a></div><h2 ng-if="!dataLoading" style="text-align: center">Details of: <b>{{profileData.UserDetails.FirstName}} {{profileData.UserDetails.LastName}}</b></h2><form name="form" ng-submit="register()" ng-if="!dataLoading" role="form"><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%"><div class="form-group col-md-12" ng-class="{ \'has-error\': form.email.$dirty && (form.email.$error.required || form.email.$error.email) }"><label for="email">Email</label><span class="mandatoryField" style="color: red">*</span> <input type="email" name="email" id="email" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.Email" required> <span ng-show="form.email.$dirty && form.email.$error.email" class="help-block">This email format is invalid!</span> <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">Email is required</span></div></div><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%"><div class="form-group col-md-6" ng-class="{ \'has-error\': form.firstName.$dirty && form.firstName.$error.required }"><label for="firstName">First name</label><span class="mandatoryField" style="color: red">*</span> <input name="firstName" id="firstName" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.FirstName" required> <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">First name is required</span></div><div class="form-group col-md-6" ng-class="{ \'has-error\': form.lastName.$dirty && form.lastName.$error.required }"><label for="lastName">Last name</label><span class="mandatoryField" style="color: red">*</span> <input name="lastName" id="lastName" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.LastName" required> <span ng-show="form.lastName.$dirty && form.lastName.$error.required" class="help-block">Last name is required</span></div></div><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%"><div class="form-group col-md-6"><label for="maritalStatus">Marital Status</label><input name="maritalStatus" id="maritalStatus" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.MaritalStatus"></div><div class="form-group col-md-6"><label for="gender">Gender</label><input name="gender" id="gender" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.Gender"></div></div><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%"><div class="form-group col-md-6"><label for="address">Address</label><input name="address" id="address" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.Address"></div><div class="form-group col-md-6"><label for="postalCode">Postal Code</label><input name="postalCode" id="postalCode" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.PostalCode"></div></div><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%"><div class="form-group col-md-6"><label for="city">City</label><input name="city" id="city" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.City"></div><div class="form-group col-md-6"><label for="province">Province</label><input name="province" id="province" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.Province"></div></div><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%"><div class="form-group col-md-6"><label for="country">Country</label><input name="country" id="country" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.Country"></div><div class="form-group col-md-6"><label for="contact">Contact</label><input type="number" name="contact" id="contact" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.Contact"></div></div><h2 style="text-align: center" ng-if="!profileData.UserDetails.IsAdmin && profileData.UserDetails.IsDoctor"><b>Doctor\'s Details</b></h2><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%" ng-if="!profileData.UserDetails.IsAdmin && profileData.UserDetails.IsDoctor"><div class="form-group col-md-6"><label for="availability">Availability</label><input name="availability" id="availability" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.Availability"></div><div class="form-group col-md-6"><label for="currentWorkingStatus">Current Working Status</label><input name="currentWorkingStatus" id="currentWorkingStatus" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.CurrentWorkingStatus"></div></div><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%" ng-if="!profileData.UserDetails.IsAdmin && profileData.UserDetails.IsDoctor"><div class="form-group col-md-6"><label for="department">Department</label><input name="department" id="department" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.Department"></div><div class="form-group col-md-6"><label for="fieldOfPractice">Field of Practice</label><input name="fieldOfPractice" id="fieldOfPractice" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.FieldOfPractice"></div></div><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%" ng-if="!profileData.UserDetails.IsAdmin && profileData.UserDetails.IsDoctor"><div class="form-group col-md-6"><label for="degree">Degree</label><input name="degree" id="degree" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.Degree"></div><div class="form-group col-md-6"><label for="graduatedFrom">Graduated From</label><input name="graduatedFrom" id="graduatedFrom" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.GraduatedFrom"></div></div><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%" ng-if="!profileData.UserDetails.IsAdmin && profileData.UserDetails.IsDoctor"><div class="form-group col-md-6"><label for="dateOfJoining">Date of Joining</label><input name="dateOfJoining" id="dateOfJoining" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.DOJ"></div><div class="form-group col-md-6"><label for="yearsOfExp">Years of Experience</label><input name="yearsOfExp" id="yearsOfExp" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.YearsOfExp"></div></div><h2 style="text-align: center" ng-if="!profileData.UserDetails.IsAdmin && !profileData.UserDetails.IsDoctor"><b>Patient\'s Details</b></h2><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%" ng-if="(!profileData.UserDetails.IsAdmin && !profileData.UserDetails.IsDoctor)"><div class="form-group col-md-6"><label for="allergies">Allergies</label><input name="allergies" id="allergies" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.Allergies"></div><div class="form-group col-md-6"><label for="healthIssues">Health Issues</label><input name="healthIssues" id="healthIssues" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.HealthIssues"></div></div><div class="form-group col-md-12" ng-if="!isreadonly" style="padding-left: 15%;padding-right: 15%"><div class="form-actions col-md-6"><button type="submit" ng-disabled="form.$invalid || dataLoading" class="btn btn-primary">Submit</button> <a href="#/dashboard" class="btn btn-link">Cancel</a></div></div></form></div>');
+      $templateCache.put('appointments/profile.html', '<div class="" ng-app="appoints" ng-controller="ProfileCtrl"><div style="font-size: larger;padding-left: 5%" ng-if="isreadonly"><a class="dropdown-toggle" role="button" title="Go to Dashboard" id="patient{{$index}}" href="" ng-click="goToDashboard()"><span class="glyphicon glyphicon-circle-arrow-left"></span>Go to dashboard</a></div><h2 ng-if="!dataLoading" style="text-align: center">Details of: <b>{{profileData.UserDetails.FirstName}} {{profileData.UserDetails.LastName}}</b></h2><form name="form" ng-submit="register()" ng-if="!dataLoading" role="form"><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%"><div class="form-group col-md-12" ng-class="{ \'has-error\': form.email.$dirty && (form.email.$error.required || form.email.$error.email) }"><label for="email">Email</label><span class="mandatoryField" style="color: red">*</span> <input type="email" name="email" id="email" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.Email" placeholder="Email" required> <span ng-show="form.email.$dirty && form.email.$error.email" class="help-block">This email format is invalid!</span> <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">Email is required</span></div></div><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%"><div class="form-group col-md-6" ng-class="{ \'has-error\': form.firstName.$dirty && form.firstName.$error.required }"><label for="firstName">First name</label><span class="mandatoryField" style="color: red">*</span> <input name="firstName" id="firstName" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.FirstName" placeholder="First name" required> <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">First name is required</span></div><div class="form-group col-md-6" ng-class="{ \'has-error\': form.lastName.$dirty && form.lastName.$error.required }"><label for="lastName">Last name</label><span class="mandatoryField" style="color: red">*</span> <input name="lastName" id="lastName" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.LastName" placeholder="Last name" required> <span ng-show="form.lastName.$dirty && form.lastName.$error.required" class="help-block">Last name is required</span></div></div><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%"><div class="form-group col-md-6"><label for="maritalStatus">Marital Status</label><select class="form-control" id="maritalStatus" ng-options="maritalStatus as maritalStatus.Description for maritalStatus in maritalStatusData track by maritalStatus.Id" ng-model="maritalStatus" required><option value="" disabled selected>Select your option</option></select></div><div class="form-group col-md-6"><label for="gender">Gender</label><select class="form-control" id="gender" ng-options="gender as gender.Description for gender in gendersData track by gender.Id" ng-model="gender" required><option value="" disabled selected>Select your option</option></select></div></div><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%"><div class="form-group col-md-6"><label for="address">Address</label><input name="address" id="address" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.Address" placeholder="Address"></div><div class="form-group col-md-6"><label for="postalCode">Postal Code</label><input name="postalCode" id="postalCode" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.PostalCode" placeholder="Postal Code"></div></div><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%"><div class="form-group col-md-6"><label for="city">City</label><input name="city" id="city" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.City" placeholder="City"></div><div class="form-group col-md-6"><label for="province">Province</label><input name="province" id="province" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.Province" placeholder="Province"></div></div><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%"><div class="form-group col-md-6"><label for="country">Country</label><input name="country" id="country" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.UserDetails.Country" placeholder="Country"></div><div class="form-group col-md-6" ng-class="{ \'has-error\': form.contact.$dirty && form.contact.$invalid }"><label for="contact">Contact</label><input name="contact" id="contact" class="form-control" ng-readonly="{{isreadonly}}" ng-pattern="/\\d{3}-\\d{3}-\\d{4}/" ng-model="profileData.UserDetails.Contact" placeholder="Contact"> <span ng-show="form.contact.$dirty && form.contact.$invalid" class="help-block">This contact format is invalid! Valid format is XXX-XXX-XXXX</span></div></div><h2 style="text-align: center" ng-if="!profileData.UserDetails.IsAdmin && profileData.UserDetails.IsDoctor"><b>Doctor\'s Details</b></h2><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%" ng-if="!profileData.UserDetails.IsAdmin && profileData.UserDetails.IsDoctor"><div class="form-group col-md-6"><label for="availability">Availability</label><input name="availability" id="availability" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.Availability" placeholder="Availability"></div><div class="form-group col-md-6"><label for="currentWorkingStatus">Current Working Status</label><input name="currentWorkingStatus" id="currentWorkingStatus" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.CurrentWorkingStatus" placeholder="Current Working Status"></div></div><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%" ng-if="!profileData.UserDetails.IsAdmin && profileData.UserDetails.IsDoctor"><div class="form-group col-md-6"><label for="department">Department</label><input name="department" id="department" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.Department" placeholder="Department"></div><div class="form-group col-md-6"><label for="fieldOfPractice">Field of Practice</label><input name="fieldOfPractice" id="fieldOfPractice" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.FieldOfPractice" placeholder="Field of Practice"></div></div><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%" ng-if="!profileData.UserDetails.IsAdmin && profileData.UserDetails.IsDoctor"><div class="form-group col-md-6"><label for="degree">Degree</label><input name="degree" id="degree" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.Degree" placeholder="Degree"></div><div class="form-group col-md-6"><label for="graduatedFrom">Graduated From</label><input name="graduatedFrom" id="graduatedFrom" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.GraduatedFrom" placeholder="Graduated From"></div></div><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%" ng-if="!profileData.UserDetails.IsAdmin && profileData.UserDetails.IsDoctor"><div class="form-group col-md-6"><label for="dateOfJoining">Date of Joining</label><input name="dateOfJoining" id="dateOfJoining" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.DOJ" placeholder="Date of Joining"></div><div class="form-group col-md-6"><label for="yearsOfExp">Years of Experience</label><input name="yearsOfExp" id="yearsOfExp" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.YearsOfExp" placeholder="Years of Experience"></div></div><h2 style="text-align: center" ng-if="!profileData.UserDetails.IsAdmin && !profileData.UserDetails.IsDoctor"><b>Patient\'s Details</b></h2><div class="form-group col-md-12" style="padding-left: 15%;padding-right: 15%" ng-if="(!profileData.UserDetails.IsAdmin && !profileData.UserDetails.IsDoctor)"><div class="form-group col-md-6"><label for="allergies">Allergies</label><input name="allergies" id="allergies" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.Allergies" placeholder="Allergies"></div><div class="form-group col-md-6"><label for="healthIssues">Health Issues</label><input name="healthIssues" id="healthIssues" class="form-control" ng-readonly="{{isreadonly}}" ng-model="profileData.HealthIssues" placeholder="Health Issues"></div></div><div class="form-group col-md-12" ng-if="!isreadonly" style="padding-left: 15%;padding-right: 15%"><div class="form-actions col-md-6"><button type="submit" ng-click="saveProfileData()" ng-disabled="form.$invalid || dataLoading" class="btn btn-primary">Submit</button> <a href="#/dashboard" class="btn btn-link">Cancel</a></div></div></form></div>');
     }
   ]);
 }());
@@ -712,13 +712,15 @@ angular.module('appoints.usersession', [
   'config',
   'flash',
   '$http',
-  function ($rootScope, $window, config, flash, $http) {
+  'Base64',
+  function ($rootScope, $window, config, flash, $http, Base64) {
     var defaultSession = {
         userId: '',
         displayName: '',
         isAuthenticated: false,
         isAdmin: false,
-        isDoctor: false
+        isDoctor: false,
+        authdata: ''
       };
     function Session() {
       return angular.copy(defaultSession, this);
@@ -738,7 +740,9 @@ angular.module('appoints.usersession', [
           currentSession.displayName = userResource.DisplayName;
           currentSession.isAdmin = userResource.IsAdmin;
           currentSession.isDoctor = userResource.IsDoctor;
-          $window.localStorage.setItem('access_token', JSON.stringify(userResource));
+          currentSession.authdata = Base64.encode(loginObj.username + ':' + loginObj.password);
+          $http.defaults.headers.common['Authorization'] = 'Basic ' + currentSession.authdata;
+          $window.localStorage.setItem('access_token', JSON.stringify(currentSession));
           $rootScope.$broadcast('event:loggedin', currentSession);
         }
       }, function (err) {
@@ -788,21 +792,79 @@ angular.module('appoints.usersession', [
   '$window',
   '$rootScope',
   'usersession',
-  function ($window, $rootScope, usersession) {
+  '$http',
+  function ($window, $rootScope, usersession, $http) {
     // Automatically try to login the user when starting up this module
     if ($window.localStorage.getItem('access_token') !== null) {
       var userResource = JSON.parse($window.localStorage.getItem('access_token'));
-      if (userResource.UserId > 0) {
-        usersession.current.isAuthenticated = true;
-        usersession.current.userId = userResource.UserId;
-        usersession.current.displayName = userResource.DisplayName;
-        usersession.current.isAdmin = userResource.IsAdmin;
-        usersession.current.isDoctor = userResource.IsDoctor;
+      if (userResource.userId > 0) {
+        usersession.current = userResource;
+        $http.defaults.headers.common['Authorization'] = 'Basic ' + userResource.authdata;
         $rootScope.$broadcast('event:loggedin', usersession.current);
       }
     }
   }
-]);
+]).factory('Base64', function () {
+  /* jshint ignore:start */
+  var keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+  return {
+    encode: function (input) {
+      var output = '';
+      var chr1, chr2, chr3 = '';
+      var enc1, enc2, enc3, enc4 = '';
+      var i = 0;
+      do {
+        chr1 = input.charCodeAt(i++);
+        chr2 = input.charCodeAt(i++);
+        chr3 = input.charCodeAt(i++);
+        enc1 = chr1 >> 2;
+        enc2 = (chr1 & 3) << 4 | chr2 >> 4;
+        enc3 = (chr2 & 15) << 2 | chr3 >> 6;
+        enc4 = chr3 & 63;
+        if (isNaN(chr2)) {
+          enc3 = enc4 = 64;
+        } else if (isNaN(chr3)) {
+          enc4 = 64;
+        }
+        output = output + keyStr.charAt(enc1) + keyStr.charAt(enc2) + keyStr.charAt(enc3) + keyStr.charAt(enc4);
+        chr1 = chr2 = chr3 = '';
+        enc1 = enc2 = enc3 = enc4 = '';
+      } while (i < input.length);
+      return output;
+    },
+    decode: function (input) {
+      var output = '';
+      var chr1, chr2, chr3 = '';
+      var enc1, enc2, enc3, enc4 = '';
+      var i = 0;
+      // remove all characters that are not A-Z, a-z, 0-9, +, /, or =
+      var base64test = /[^A-Za-z0-9\+\/\=]/g;
+      if (base64test.exec(input)) {
+        window.alert('There were invalid base64 characters in the input text.\n' + 'Valid base64 characters are A-Z, a-z, 0-9, \'+\', \'/\',and \'=\'\n' + 'Expect errors in decoding.');
+      }
+      input = input.replace(/[^A-Za-z0-9\+\/\=]/g, '');
+      do {
+        enc1 = keyStr.indexOf(input.charAt(i++));
+        enc2 = keyStr.indexOf(input.charAt(i++));
+        enc3 = keyStr.indexOf(input.charAt(i++));
+        enc4 = keyStr.indexOf(input.charAt(i++));
+        chr1 = enc1 << 2 | enc2 >> 4;
+        chr2 = (enc2 & 15) << 4 | enc3 >> 2;
+        chr3 = (enc3 & 3) << 6 | enc4;
+        output = output + String.fromCharCode(chr1);
+        if (enc3 != 64) {
+          output = output + String.fromCharCode(chr2);
+        }
+        if (enc4 != 64) {
+          output = output + String.fromCharCode(chr3);
+        }
+        chr1 = chr2 = chr3 = '';
+        enc1 = enc2 = enc3 = enc4 = '';
+      } while (i < input.length);
+      return output;
+    }
+  };  /* jshint ignore:end */
+});
 angular.module('appoints.home', [
   'appoints.config',
   'ngRoute'
@@ -934,7 +996,7 @@ angular.module('appoints.dashboard', [
           method: 'DELETE',
           url: config.apiEndpoint + '/appointments/' + appointment.AppointmentId
         };
-      return $http(req).then(function (appointments) {
+      return $http(req).then(function () {
       }, function (err) {
         flash.add(err.data.ExceptionMessage, 'error');
       });
@@ -988,7 +1050,7 @@ angular.module('appoints.dashboard', [
         $location.url('/appointment/true/' + appointment.AppointmentId);
       } else {
         $location.url('/appointment/false/' + appointment.AppointmentId);
-      }  // $scope.alertMessage = (date.title + ' was clicked ');
+      }
     };
     /* Change View */
     $scope.changeView = function (view, calendar) {
@@ -1080,6 +1142,14 @@ angular.module('appoints.profile', [
     // var profileVM = this;
     $scope.isreadonly = $routeParams.isreadonly === 'true';
     $scope.dataLoading = true;
+    $scope.maritalStatus = {
+      Id: 0,
+      Description: ''
+    };
+    $scope.gender = {
+      Id: 0,
+      Description: ''
+    };
     $scope.getProfileData = function () {
       var reqURL = config.apiEndpoint;
       if ($scope.isreadonly) {
@@ -1104,6 +1174,53 @@ angular.module('appoints.profile', [
       return $http(req).then(function (result) {
         $scope.dataLoading = false;
         $scope.profileData = result.data;
+        $scope.maritalStatus.Id = $scope.profileData.UserDetails.MaritalStatus;
+        $scope.gender.Id = $scope.profileData.UserDetails.Gender;
+      }, function (err) {
+        flash.add(err.data.ExceptionMessage, 'error');
+      });
+    };
+    $scope.saveProfileData = function () {
+      var reqURL = config.apiEndpoint;
+      if (usersession.current.isAdmin) {
+        reqURL = reqURL + '/admins';
+      } else if (usersession.current.isDoctor) {
+        reqURL = reqURL + '/doctors';
+      } else {
+        reqURL = reqURL + '/patients';
+      }
+      $scope.profileData.UserDetails.MaritalStatus = $scope.maritalStatus.Id;
+      $scope.profileData.UserDetails.Gender = $scope.gender.Id;
+      var req = {
+          method: 'PUT',
+          url: reqURL,
+          data: $scope.profileData
+        };
+      return $http(req).then(function () {
+        flash.add('Profile saved successfully', 'info');
+        $location.url('/dashboard');
+      }, function (err) {
+        flash.add(err.data.ExceptionMessage, 'error');
+      });
+    };
+    $scope.getGenderData = function () {
+      var req = {
+          method: 'GET',
+          url: config.apiEndpoint + '/genders'
+        };
+      return $http(req).then(function (result) {
+        $scope.gendersData = result.data;
+      }, function (err) {
+        flash.add(err.data.ExceptionMessage, 'error');
+      });
+    };
+    $scope.getMaritalStatusData = function () {
+      var req = {
+          method: 'GET',
+          url: config.apiEndpoint + '/maritalstatus'
+        };
+      return $http(req).then(function (result) {
+        $scope.maritalStatusData = result.data;
       }, function (err) {
         flash.add(err.data.ExceptionMessage, 'error');
       });
@@ -1111,9 +1228,9 @@ angular.module('appoints.profile', [
     $scope.goToDashboard = function () {
       $location.url('/dashboard');
     };
-    $scope.getProfileData();  // $timeout(function () {
-                              //     $scope.getProfileData(); // this is the called function
-                              //   }, 3000);
+    $scope.getProfileData();
+    $scope.getGenderData();
+    $scope.getMaritalStatusData();
   }
 ]);
 angular.module('appoints.signin', [
