@@ -1750,8 +1750,8 @@ angular.module('appoints.profile', [
       Id: 0,
       Description: ''
     };
-    $('#maritalStatus').attr('disabled', true);
-    $('#gender').attr('disabled', true);
+    $('#maritalStatus').attr('disabled', $scope.isreadonly);
+    $('#gender').attr('disabled', $scope.isreadonly);
     $scope.getProfileData = function () {
       var reqURL = config.apiEndpoint;
       if ($scope.isreadonly) {
@@ -1857,7 +1857,7 @@ angular.module('appoints.logindetails', [
           if (usersession.returnTo) {
             $location.url(usersession.returnTo);
           } else {
-            $location.url('/');
+            $location.url('/dashboard');
           }
         }
       }, function (err) {

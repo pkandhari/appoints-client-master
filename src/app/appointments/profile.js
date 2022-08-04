@@ -9,8 +9,8 @@ angular.module('appoints.profile', [
         $scope.maritalStatus = { Id: 0, Description: '' };
         $scope.gender = { Id: 0, Description: '' };
 
-        $('#maritalStatus').attr("disabled", true);
-        $('#gender').attr("disabled", true);
+        $('#maritalStatus').attr("disabled",  $scope.isreadonly );
+        $('#gender').attr("disabled",  $scope.isreadonly );
 
         $scope.getProfileData = function () {
             var reqURL = config.apiEndpoint;

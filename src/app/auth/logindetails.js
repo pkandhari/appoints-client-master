@@ -18,7 +18,7 @@ angular.module('appoints.logindetails', [
                             $location.url(usersession.returnTo);
                         }
                         else {
-                            $location.url('/');
+                            $location.url('/dashboard');
                         }
                     }
                 }, function (err) {
