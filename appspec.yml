@@ -23,7 +23,7 @@ os: windows
 #   may cause associated deployments to fail.
 files:
   - source: .
-    destination: C:\Program Files\WS
+    destination: C:\Program Files\appoints-client-master
 # For deployments to Amazon Linux and Ubuntu Server instances,
 #   you can specify a "permissions" 
 #   section here that describes special permissions to apply to the files 
