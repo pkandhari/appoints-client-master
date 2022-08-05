@@ -1107,7 +1107,7 @@ angular.module('ui.calendar', []).constant('uiCalendarConfig', { calendars: {} }
     };
   }
 ]);
-angular.module('appoints.config', []).constant('config', { 'apiEndpoint': 'http://localhost/DocConnectAPI' }).constant('appName', 'appoints-client').constant('appVersion', '0.1.0').constant('appDescription', 'Doctor appointment scheduler app');
+angular.module('appoints.config', []).constant('config', { 'apiEndpoint': 'http://3.84.17.160/DocConnectAPI' }).constant('appName', 'appoints-client').constant('appVersion', '0.1.0').constant('appDescription', 'Doctor appointment scheduler app');
 ;
 angular.module('appoints.directives', []);
 angular.module('appoints.flash', []).factory('flash', [

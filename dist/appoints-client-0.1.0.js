@@ -636,7 +636,7 @@ angular.module('ui.calendar', [])
 angular.module("appoints.config", [])
 
 .constant("config", {
-	"apiEndpoint": "http://localhost/DocConnectAPI"
+	"apiEndpoint": "http://3.84.17.160/DocConnectAPI"
 })
 
 .constant("appName", "appoints-client")
