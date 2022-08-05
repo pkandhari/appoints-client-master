@@ -3,7 +3,7 @@
   "deps": [],
   "constants": {
   	"config": {
-      "apiEndpoint": "http://3.84.17.160/DocConnectAPI"
+      "apiEndpoint": "http://44.208.29.151/DocConnectAPI"
   	}
   }
 }
